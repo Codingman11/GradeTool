@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 @dataclass
 class StudentInfo:
-    def __init__(self, name: str, student_number: str, exam_level: str, group: str, feedback: []) -> None:
+    def __init__(self, name: str, student_number: str, exam_level: str, group: str, feedback: list) -> None:
         self.name = name
         self.student_name = student_number
         self.exam_level = exam_level
