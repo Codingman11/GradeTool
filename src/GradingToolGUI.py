@@ -1,7 +1,7 @@
 import dearpygui.dearpygui as dpg
 import os, json
 from pathlib import Path
-from data import StudentInfo, ErrorInfo, Category
+from data import StudentInfo, ErrorInfo, Category, ExamInfo
 
 DEFAULT_FONT = Path(__file__).parents[1] / "assets/arialn.ttf"
 HL_FONT = Path(__file__).parents[1] / "assets/arialnb.ttf"
@@ -16,7 +16,7 @@ HL_FONT = Path(__file__).parents[1] / "assets/arialnb.ttf"
 # Copy the text to clipboard
 # 
 
-student = StudentInfo("Testi", "212311", "A2", "Minimi", ["Test", "Guono"])
+
 #initialize font 
 def initialize_font():
     with dpg.font_registry():
@@ -25,11 +25,28 @@ def initialize_font():
         title_font = dpg.add_font(HL_FONT, 22)
     return default_font, hl_font, title_font
 
+exam = True
+
+if (exam == False):
+    student = StudentInfo("Pekka", "32322", "Minimi", ["TEsti", "Testi"])
+    print(student.name, student.student_number, student.group, student.feedback)
+else:
+    student = ExamInfo("Pekka", "23232", "F", ["eadf", "sadf"], "T2")
+    print(student.name, student.student_number, student.group, student.feedback, student.exam_level)
+
 def add_files_in_folder(dirname):
     student_list = []
     files = os.listdir(dirname)
-    for file in files:
-        print(file)
+
+    
+    
+        
+
+
+#How to determine whether it is exam or project
+def stripFilename(dirname, file):
+    print(file)
+
 
 
 

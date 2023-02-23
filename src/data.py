@@ -2,12 +2,14 @@ from dataclasses import dataclass
 
 @dataclass
 class StudentInfo:
-    def __init__(self, name: str, student_number: str, exam_level: str, group: str, feedback: list) -> None:
+    def __init__(self, name: str, student_number: str, group: str, feedback: list) -> None:
         self.name = name
-        self.student_name = student_number
-        self.exam_level = exam_level
+        self.student_number = student_number
         self.group = group
         self.feedback = feedback
+
+    def print_id(self):
+        print(f'The name is {self.name}, student_number is {self.student_number}')
 @dataclass
 class ErrorInfo:
     def __init__(self, error:tuple, text:str, errorpoints:float, amount:int, alternative:list, exclude:list) -> None:
@@ -22,4 +24,8 @@ class Category:
     def __init__(self, name:str, category_sum:int) -> None:
         self.name = name
         self.category_sum = category_sum
+@dataclass
+class ExamInfo(StudentInfo): 
+    def __init__(self, exam_level:str):
+        self.exam_level = exam_level
 
