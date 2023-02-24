@@ -2,7 +2,8 @@ import dearpygui.dearpygui as dpg
 import GradingToolGUI as gui
 import dearpygui.demo as demo
 from tkinter import filedialog
-from os import path
+from os import path, getcwd
+import pathlib
 
 #   V0.1.0 GUI windows added, data structure for student, errors and category added
 #   V0.1.1 File director added and sorting the files 
@@ -10,13 +11,18 @@ from os import path
 def main() -> None:
 
     # Initializing all data structures
+    
 
+    
+    categoryList = gui.read_problem_json("Problem_list.json")
+
+    print(categoryList)
     indent = 20
     dpg.create_context()
 
     dpg.configure_app(docking=True, docking_space=True,
                       load_init_file='custom_layout.ini')
-
+    dpg.create_viewport(title="GradeTool")
     default_font, hl_font, title_font = gui.initialize_font()
 
     student_window = dpg.generate_uuid()
@@ -24,12 +30,11 @@ def main() -> None:
     button_window = dpg.generate_uuid()
     data_window = dpg.generate_uuid()
 
-    dirname = filedialog.askdirectory()
-    gui.add_files_in_folder(dirname)
+    # dirname = filedialog.askdirectory()
+    # gui.add_files_in_folder(dirname)
 
+    
 
-    dpg.create_viewport(title="Grading tool", width=1200,
-                        height=600, resizable=True)
     with dpg.window(label="Opiskelijat", tag=student_window):
        
         pass
@@ -37,7 +42,7 @@ def main() -> None:
     with dpg.window(label="Virheet", tag=category_window) as cWindow:
         
         with dpg.group():
-            with dpg.table(header_row=True, policy=dpg.mvTable_SizingFixedFit, resizable=True, no_host_extendX=True, borders_innerV=True, borders_outerV=True, borders_outerH=True) as student_table:
+            with dpg.table(header_row=True, policy=dpg.mvTable_SizingFixedFit, resizable=True, no_host_extendX=False, borders_innerV=True, borders_outerV=True, borders_outerH=True) as student_table:
 
                 dpg.add_table_column(label=f'Virhe koodissa', width_fixed=True)
                 dpg.add_table_column(
@@ -52,9 +57,15 @@ def main() -> None:
     with dpg.window(label="Toiminnot", tag=button_window) as bWindow:
         pass
 
-    with dpg.window(label="Opiskelija", tag=data_window) as dWindow:
+    with dpg.window(label="Arviointitaulukko", tag=data_window) as dWindow:
         pass
 
+    # with dpg.window(label="Temporary Window"):
+    #     dpg.add_button(label="Save Ini File", callback=lambda: dpg.save_init_file("custom_layout.ini"))
+
+    with dpg.viewport_menu_bar():
+        with dpg.menu(label="File"):
+            dpg.add_menu_item(label="Save layout", callback=lambda: dpg.save_init_file("custom_layout.ini"))
   
     # dpg.bind_item_font(button1, hl_font)
     # vp_width = dpg.get_viewport_client_width()
@@ -82,12 +93,13 @@ def main() -> None:
     # win_config = dpg.get_item_configuration(sw)
     # demo.show_demo()
     
-    dpg.show_item_registry()
+
 
 
     dpg.setup_dearpygui()
 
     dpg.show_viewport()
+
     while dpg.is_dearpygui_running():
         dpg.render_dearpygui_frame()
         

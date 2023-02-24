@@ -1,31 +1,39 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 @dataclass
 class StudentInfo:
-    def __init__(self, name: str, student_number: str, group: str, feedback: list) -> None:
-        self.name = name
-        self.student_number = student_number
-        self.group = group
-        self.feedback = feedback
+    name: str
+    student_number: str = field(default_factory=str, init=False)
+    group: str
+    feedback: list = field(default_factory=list) 
+    grade: int = field(default_factory=int)
 
-    def print_id(self):
-        print(f'The name is {self.name}, student_number is {self.student_number}')
+
+
 @dataclass
 class ErrorInfo:
-    def __init__(self, error:tuple, text:str, errorpoints:float, amount:int, alternative:list, exclude:list) -> None:
-        self.error = error
-        self.text = text
-        self.errorpoints = errorpoints
-        self.amount = amount
-        self.alternative = alternative
-        self.exclude = exclude
-@dataclass
-class Category:
-    def __init__(self, name:str, category_sum:int) -> None:
-        self.name = name
-        self.category_sum = category_sum
+    error_id: str = ""
+    text: str = ""
+    values: dict = field(default_factory=dict)
+    amount: int = 0
+    feedback: str = field(default_factory=str)
+    alternative: list = field(default_factory=list)
+    exclude: list = field(default_factory=list)
+
+    def __str__(self) -> str:
+        return(f"{self.error_id}, {self.text}")
+
+@dataclass(kw_only=True)
+class Category(ErrorInfo):
+    name: str = ""
+    category_sum: int = field(default=0)
+    errors: list[ErrorInfo] = field(default_factory=list)
+
+    def __str__(self) -> str:
+        return super().__str__() + f"{self.errors}"
+    
 @dataclass
 class ExamInfo(StudentInfo): 
-    def __init__(self, exam_level:str):
-        self.exam_level = exam_level
+    exam_level: str = ""
+    exam_group: str = ""
 
