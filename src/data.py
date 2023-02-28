@@ -1,4 +1,4 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, fields
 
 @dataclass
 class StudentInfo:
@@ -8,7 +8,7 @@ class StudentInfo:
     feedback: list = field(default_factory=list) 
     grade: int = field(default_factory=int)
 
-
+        
 
 @dataclass
 class ErrorInfo:
@@ -23,14 +23,20 @@ class ErrorInfo:
     def __str__(self) -> str:
         return(f"{self.error_id}, {self.text}")
 
-@dataclass(kw_only=True)
-class Category(ErrorInfo):
+@dataclass
+class Category():
     name: str = ""
     category_sum: int = field(default=0)
     errors: list[ErrorInfo] = field(default_factory=list)
-
+    
     def __str__(self) -> str:
-        return super().__str__() + f"{self.errors}"
+        return f"{self.errors}"
+    
+    def getName(self):
+        return self.name
+    def printErrors(self):
+        for error in self.errors:
+            print(error.text)
     
 @dataclass
 class ExamInfo(StudentInfo): 
