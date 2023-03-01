@@ -2,11 +2,12 @@ import dearpygui.dearpygui as dpg
 import os, json
 from pathlib import Path
 from data import StudentInfo, ErrorInfo, Category, ExamInfo
-
+import itertools
 
 DEFAULT_FONT = Path(__file__).parents[1] / "assets/arialn.ttf"
 HL_FONT = Path(__file__).parents[1] / "assets/arialnb.ttf"
 
+MAX_GRADE = {"minimi": 1, "perus": 3, "tavoite": 5}
 #TODO 
 # Error calculator
     # Buttons + amd - for changing error amount
@@ -16,6 +17,7 @@ HL_FONT = Path(__file__).parents[1] / "assets/arialnb.ttf"
 # Write data to master.json
 # Copy the text to clipboard
 # 
+
 
 
 #initialize font 
@@ -66,34 +68,32 @@ def select_student(sender, app_data, user_data):
 
     studentWithErrors = user_data[0]
     categoryList = user_data[1]
-    student = str(app_data)
+    student_list = user_data[2]
+    student_name = str(app_data)
+    studentObject = findStudent(student_name, student_list) 
+    updateTable(categoryList, studentWithErrors, student_name)
     
-    # found = keys_exits(studentWithErrors, student)
-    # print(found)
-    # for category in categoryList:
-    #     for error in category.errors:
-    #         if (found):
-    #             dpg.set_value(error.error_id, studentWithErrors[student][error.error_id])
-    #         else:
-    #             dpg.set_value(error.error_id, 0)
-    if (student not in studentWithErrors.keys()):
-        for category in categoryList:
-            for error in category.errors:
-                dpg.set_value(error.error_id, 0)
-    else:
-        for category in categoryList:
-            for error in category.errors:
-                if error.error_id in studentWithErrors[student].keys():
-                    dpg.set_value(error.error_id, studentWithErrors[student][error.error_id])
-    #print(f"sender: {sender}, app_data: {app_data}, user data: {user_data}")    
-    #print(f"sender: {sender}, app_data: {app_data}")
+    if (studentObject != None):
+        updateDataWindow(studentObject)
     
-    
-    
-    #print(f"Sender: {sender}, app_data: {app_data}")
-    
-    #print(f"Errors: {studentErrors} and \n categoryList {categoryList}")
 
+    
+  
+def findStudent(student_name, student_list) -> StudentInfo:
+    return next((x for x in student_list if x.name == student_name), None)
+
+def updateDataWindow(studentObject):
+    dpg.set_value("level", studentObject.group)
+    dpg.set_value("student_grade", str(MAX_GRADE[studentObject.group]))
+    
+def updateTable(categoryList, studentWithErrors, student):
+    for category in categoryList:
+        for error in category.errors:
+            if (student in studentWithErrors.keys() and error._id in studentWithErrors[student].keys()):
+                dpg.set_value(error._id, studentWithErrors[student][error._id])
+            else:
+                dpg.set_value(error._id, 0)
+    
 def keys_exits(dictionary, keys):
     nested_dict = dictionary
     for key in keys:
@@ -103,21 +103,21 @@ def keys_exits(dictionary, keys):
             return False
     return True
     
-def mistakeSelected(sender, app_data, studentWithErrors):
+def mistakeSelected(sender, app_data, user_data):
     student = dpg.get_value("student_view")
+    studentWithErrors = user_data[0]
+    student_list = user_data[1]
     error_value = dpg.get_value(sender)
     if student not in studentWithErrors.keys():
         studentWithErrors[student] = {}
         studentWithErrors[student][sender] = error_value
     else:
         studentWithErrors[student][sender] = error_value
-    print(studentWithErrors)
-
-def clearTableValues(sender, app_data, categoryList):
-    for category in categoryList:
-        for error in category.errors:
-            dpg.set_value(error.error_id, 2)
-            
+    
+    #Finding the student object from list
+    studentObject = next((x for x in student_list if x.name == student), None)
+    
+   
 
 #How to determine whether it is exam or project
 def stripFilename(dirname, file):
@@ -137,7 +137,7 @@ def read_problem_json(filename):
                 next_category = problem["category"]
                 if (next_category == current_category):
                     errorInfo = ErrorInfo()
-                    errorInfo.error_id = problem["ID"]
+                    errorInfo._id = problem["ID"]
                     errorInfo.text = problem["text"]
                     errorInfo.values = problem["error_values"]
                     errorInfo.feedback = problem["feedback"]

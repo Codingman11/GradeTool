@@ -9,8 +9,8 @@ import pathlib
 #   V0.1.0 GUI windows added, data structure for student, errors and category added
 #   V0.1.1 File director added and sorting the files
 #   V0.1.2 Mistakes from problem_list.json added to error window and a functionality between students and selecting mistake 
-
-
+#   V0.1.3 Data Window added and Feedback window added.
+MAX_GRADE = {"minimi": 1, "perus": 3, "tavoite": 5}
 
 
 def main() -> None:
@@ -48,7 +48,7 @@ def main() -> None:
     with dpg.window(label="Opiskelijat", tag=student_window):
 
         with dpg.group(width=400):
-            dpg.add_listbox(students, num_items=25, tag="student_view", callback=gui.select_student, user_data=[studentWithErrors, categoryList])
+            dpg.add_listbox(students, num_items=25, tag="student_view", callback=gui.select_student, user_data=[studentWithErrors, categoryList, student_list])
         
     with dpg.window(label="Virheet", tag=category_window) as cWindow:
 
@@ -72,13 +72,27 @@ def main() -> None:
                             for error in category.errors:
                                 with dpg.table_row():
                                     dpg.add_text(error.text, tag=error.text)
-                                    dpg.add_input_int(min_value=-1, min_clamped=True, default_value=0, width=100, tag=error.error_id, callback=gui.mistakeSelected, user_data=studentWithErrors)
+                                    dpg.add_input_int(min_value=-1, min_clamped=True, default_value=0, width=100, tag=error._id, callback=gui.mistakeSelected,  user_data=[studentWithErrors, student_list])
 
     with dpg.window(label="Toiminnot", tag=button_window) as bWindow:
-        pass
+        
+        dpg.add_input_text(multiline=True, height=-1, width=-1)
 
     with dpg.window(label="Arviointitaulukko", tag=data_window) as dWindow:
-        pass
+    
+        dpg.add_separator()
+        # with dpg.group(horizontal=True):
+        #     dpg.add_text("Opiskelijanumero: ")
+        #     dpg.add_input_text(tag="student_number", width=200)
+        with dpg.group(horizontal=True):
+            dpg.add_text("Taso: ")
+            dpg.add_text(student_list[0].group, tag="level")
+            dpg.add_text("Arvosana: ")
+            dpg.add_text(MAX_GRADE[student_list[0].group], tag="student_grade")
+            dpg.add_text("Virhepisteet: ")
+            dpg.add_text("0", tag="error_points")
+
+           
 
     with dpg.viewport_menu_bar():
         with dpg.menu(label="File"):
@@ -88,33 +102,22 @@ def main() -> None:
             )
 
     with dpg.item_handler_registry(tag="student handler") as handler:
-        dpg.add_item_clicked_handler(callback=gui.select_student, user_data=[studentWithErrors, categoryList])
+        dpg.add_item_clicked_handler(callback=gui.select_student, user_data=[studentWithErrors, categoryList, student_list])
 
    
     with dpg.item_handler_registry(tag="mistake handler") as mHandler:
-        dpg.add_item_clicked_handler(callback=gui.mistakeSelected, user_data=studentWithErrors)
-    #TODO How to reset the error window after clicking student
+        dpg.add_item_clicked_handler(callback=gui.mistakeSelected, user_data=[studentWithErrors, student_list])
+    #TODO How to reset the error window after clicking student DONE
         
     dpg.bind_item_handler_registry("student_view", "student handler")
     dpg.bind_item_handler_registry("error_view", "error handler")
-    categories = dpg.get_item_children("error_view")[1]
-    print(dpg.get_item_children(categories[0]))
-
-
-    dpg.show_item_registry()
+   
+    #dpg.show_item_registry()
     dpg.setup_dearpygui()
-
-    dpg.show_viewport()
-    current = ""
-    
-
-    
+    dpg.show_viewport()    
     while dpg.is_dearpygui_running():
         dpg.render_dearpygui_frame()
         
-        
-
-
     dpg.destroy_context()
 
 if __name__ == "__main__":

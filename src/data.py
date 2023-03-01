@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field, fields
-
+from typing import Any, Union
 @dataclass
 class StudentInfo:
     name: str
@@ -7,12 +7,13 @@ class StudentInfo:
     group: str
     feedback: list = field(default_factory=list) 
     grade: int = field(default_factory=int)
-
-        
+    errorpoints: Union[str, int] = field(default_factory= str, init=False)
+    def __str__(self) -> str:
+        return(f"Student name: {self.name}, group: {self.group}")
 
 @dataclass
 class ErrorInfo:
-    error_id: str = ""
+    _id: str = ""
     text: str = ""
     values: dict = field(default_factory=dict)
     amount: int = 0
