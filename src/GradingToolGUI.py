@@ -6,8 +6,9 @@ import itertools
 
 DEFAULT_FONT = Path(__file__).parents[1] / "assets/arialn.ttf"
 HL_FONT = Path(__file__).parents[1] / "assets/arialnb.ttf"
-
+FILENAME = "master.json"
 MAX_GRADE = {"minimi": 1, "perus": 3, "tavoite": 5}
+
 #TODO 
 # Error calculator
     # Buttons + amd - for changing error amount
@@ -47,6 +48,7 @@ def add_files_in_folder_default(sender, app_data):
     for file in files:
         print(file)
 
+
 def add_files_in_folder(dirname):
     student_list = []
     
@@ -66,9 +68,7 @@ def add_files_in_folder(dirname):
 
 def select_student(sender, app_data, user_data):
 
-    studentWithErrors = user_data[0]
-    categoryList = user_data[1]
-    student_list = user_data[2]
+    studentWithErrors, categoryList, student_list = user_data[0], user_data[1], user_data[2]
     student_name = str(app_data)
     studentObject = findStudent(student_name, student_list) 
     updateTable(categoryList, studentWithErrors, student_name)
@@ -76,9 +76,6 @@ def select_student(sender, app_data, user_data):
     if (studentObject != None):
         updateDataWindow(studentObject)
     
-
-    
-  
 def findStudent(student_name, student_list) -> StudentInfo:
     return next((x for x in student_list if x.name == student_name), None)
 
@@ -94,30 +91,43 @@ def updateTable(categoryList, studentWithErrors, student):
             else:
                 dpg.set_value(error._id, 0)
     
-def keys_exits(dictionary, keys):
-    nested_dict = dictionary
-    for key in keys:
-        try:
-            nested_dict = nested_dict[key]
-        except KeyError:
-            return False
-    return True
+def writeToJsonFile(sender, app_data, studentWithErrors):
+
+    try:
+        with open(FILENAME, "w", encoding="utf-8") as outfile:
+            json.dump(studentWithErrors, outfile, indent=4, ensure_ascii=False)
+    except FileNotFoundError as e:
+        print("File not found", e)
     
 def mistakeSelected(sender, app_data, user_data):
-    student = dpg.get_value("student_view")
+    student_name = dpg.get_value("student_view")
     studentWithErrors = user_data[0]
     student_list = user_data[1]
     error_value = dpg.get_value(sender)
-    if student not in studentWithErrors.keys():
-        studentWithErrors[student] = {}
-        studentWithErrors[student][sender] = error_value
+    student = findStudent(student_name, student_list)
+    if student_name not in studentWithErrors.keys():
+        studentWithErrors[student_name] = {}
+        studentWithErrors[student_name][sender] = error_value
     else:
-        studentWithErrors[student][sender] = error_value
+        studentWithErrors[student_name][sender] = error_value
+    
+    student.errorlist = studentWithErrors
     
     #Finding the student object from list
-    studentObject = next((x for x in student_list if x.name == student), None)
+
+def readJsonFile(studentWithErrors):
+    try:
+        if os.path.isfile(FILENAME):
+
+            with open(FILENAME, "r", encoding="utf-8") as file:
+                if (len(file) != 0):
+                    studentWithErrors = json.load(file)
+                else:
+                    pass
+    except FileNotFoundError as e:
+        print("File not found ", e)
     
-   
+
 
 #How to determine whether it is exam or project
 def stripFilename(dirname, file):
@@ -133,26 +143,21 @@ def read_problem_json(filename):
             data = json.load(f_json)
             current_category = data["violations"][0]["category"]
             for problem in data["violations"]:
-
+                _id = problem["ID"]
+                text = problem["text"]
+                values = problem["error_values"]
+                feedback = problem["feedback"]
                 next_category = problem["category"]
                 if (next_category == current_category):
-                    errorInfo = ErrorInfo()
-                    errorInfo._id = problem["ID"]
-                    errorInfo.text = problem["text"]
-                    errorInfo.values = problem["error_values"]
-                    errorInfo.feedback = problem["feedback"]
+                    errorInfo = ErrorInfo(_id, text, values, feedback)
                     errorList.append(errorInfo)
                 else:
-    
                     category = Category(name= current_category, errors=errorList)
                     current_category = next_category
                     categoryList.append(category)
-                    # for category in categoryList:
-                    #     print(category)
                     errorList = []   
                     
-        
-           
+            ##### The last item #####
             category = Category(name = current_category, errors=errorList)
             current_category = next_category
             categoryList.append(category)

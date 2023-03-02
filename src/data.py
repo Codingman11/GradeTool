@@ -8,6 +8,7 @@ class StudentInfo:
     feedback: list = field(default_factory=list) 
     grade: int = field(default_factory=int)
     errorpoints: Union[str, int] = field(default_factory= str, init=False)
+    errorlist: list = field(default_factory=list, init=False)
     def __str__(self) -> str:
         return(f"Student name: {self.name}, group: {self.group}")
 
@@ -16,13 +17,13 @@ class ErrorInfo:
     _id: str = ""
     text: str = ""
     values: dict = field(default_factory=dict)
-    amount: int = 0
+    amount: int = field(default=0, init=False)
     feedback: str = field(default_factory=str)
-    alternative: list = field(default_factory=list)
-    exclude: list = field(default_factory=list)
+    alternative: list = field(default_factory=list, init=False)
+    exclude: list = field(default_factory=list, init=False)
 
     def __str__(self) -> str:
-        return(f"{self.error_id}, {self.text}")
+        return(f"{self._id}, {self.text}, {self.feedback}, {self.values}, {self.amount}")
 
 @dataclass
 class Category():
