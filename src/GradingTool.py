@@ -10,6 +10,7 @@ import pathlib
 #   V0.1.1 File director added and sorting the files
 #   V0.1.2 Mistakes from problem_list.json added to error window and a functionality between students and selecting mistake 
 #   V0.1.3 Data Window added and Feedback window added.
+#   V0.1.4 writing graded data to JSON file added. 
 MAX_GRADE = {"minimi": 1, "perus": 3, "tavoite": 5}
 #DEFAULT_FONT, NORMAL_FONT, TITLE_FONT = gui.initialize_font()
 
@@ -23,7 +24,9 @@ def main() -> None:
 
     ######## INITIALIZING DATA AND DPG ########
     categoryList = gui.read_problem_json("Problem_list.json")
-    studentWithErrors = {}
+    gui.read_json_file()
+    #print(category)
+    studentWithErrors = gui.readGradedFile()
     student_list = gui.add_files_in_folder(dirname)
     students = tuple(student.name for student in student_list)
     
@@ -111,7 +114,11 @@ def main() -> None:
     #dpg.show_item_registry()
     dpg.setup_dearpygui()
     dpg.show_viewport()        
-    dpg.start_dearpygui()
+    dpg.start_dearpygui()    
+    # while dpg.is_dearpygui_running():
+    #     jobs = dpg.get_callback_queue()
+    #     dpg.run_callbacks(jobs)
+    #     dpg.render_dearpygui_frame()
     dpg.destroy_context()
 
 if __name__ == "__main__":

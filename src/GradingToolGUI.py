@@ -1,6 +1,7 @@
 import dearpygui.dearpygui as dpg
 import os, json
 from pathlib import Path
+from typing import Dict, Any
 from data import StudentInfo, ErrorInfo, Category, ExamInfo
 import itertools
 
@@ -28,15 +29,6 @@ def initialize_font():
         hl_font = dpg.add_font(HL_FONT, 15)
         title_font = dpg.add_font(HL_FONT, 22)
     return default_font, hl_font, title_font
-
-
-
-# if (exam == False):
-#     student = StudentInfo("Pekka", "32322", "Minimi", ["TEsti", "Testi"])
-#     print(student.name, student.student_number, student.group, student.feedback)
-# else:
-    # student = ExamInfo("Pekka", "23232", "F", ["eadf", "sadf"], "T2")
-    # print(student.name, student.student_number, student.group, student.feedback, student.exam_level)
 
 
 
@@ -75,9 +67,10 @@ def select_student(sender, app_data, user_data):
     
     if (studentObject != None):
         updateDataWindow(studentObject)
-    
+
 def findStudent(student_name, student_list) -> StudentInfo:
     return next((x for x in student_list if x.name == student_name), None)
+
 
 def updateDataWindow(studentObject):
     dpg.set_value("level", studentObject.group)
@@ -113,20 +106,26 @@ def mistakeSelected(sender, app_data, user_data):
     
     student.errorlist = studentWithErrors
     
-    #Finding the student object from list
+    
+    
 
-def readJsonFile(studentWithErrors):
+######## READING GRADED STUDENT FROM JSON ########
+def readGradedFile():
     try:
         if os.path.isfile(FILENAME):
-
-            with open(FILENAME, "r", encoding="utf-8") as file:
-                if (len(file) != 0):
-                    studentWithErrors = json.load(file)
-                else:
-                    pass
+            with open(FILENAME, encoding="utf-8") as file:
+                if (os.stat(FILENAME).st_size > 0):
+                    graded_dict = json.load(file)
+                    print(graded_dict) 
+                else: 
+                    graded_dict = {}
+            
+                       
     except FileNotFoundError as e:
         print("File not found ", e)
     
+
+    return graded_dict
 
 
 #How to determine whether it is exam or project
@@ -165,8 +164,22 @@ def read_problem_json(filename):
 
     except FileNotFoundError as e:
         print("File not found", e)
-
+    
     return categoryList
+
+
+def read_json_file():
+    with open("Problem_list.json", encoding="utf-8") as file:
+        problem_list = file.read()
+        parsed_file = parse_json_file(problem_list)    
+        category = dict_to_category(parsed_file)    
+    
+    print(category)
+def parse_json_file(json_string: str) -> Dict[Any, Any]:
+    return json.loads(json_string)["violations"]
+
+def dict_to_category(parsed_json_dict: Dict[Any, Any]) -> Category:
+    return Category(**parsed_json_dict)
 
 
 
