@@ -8,7 +8,7 @@ class StudentInfo:
     feedback: list = field(default_factory=list) 
     grade: int = field(default_factory=int)
     errorpoints: Union[str, int] = field(default_factory= str, init=False)
-    errorlist: list = field(default_factory=list, init=False)
+    errorlist: dict = field(default_factory=dict)
     def __str__(self) -> str:
         return(f"Student name: {self.name}, group: {self.group}")
 
