@@ -7,8 +7,13 @@ class StudentInfo:
     group: str
     feedback: list = field(default_factory=list) 
     grade: int = field(default_factory=int)
+<<<<<<< Updated upstream
     errorpoints: Union[str, int] = field(default_factory= str, init=False)
     errorlist: list = field(default_factory=list, init=False)
+=======
+    errorpoints: int = field(default=0)
+    errorlist: dict = field(default_factory=dict)
+>>>>>>> Stashed changes
     def __str__(self) -> str:
         return(f"Student name: {self.name}, group: {self.group}")
 
@@ -25,7 +30,15 @@ class ErrorInfo:
     def __str__(self) -> str:
         return(f"{self._id}, {self.text}, {self.feedback}, {self.values}, {self.amount}")
 
+<<<<<<< Updated upstream
 @dataclass()
+=======
+@dataclass
+class Students:
+    studentList: list[StudentInfo] = field(default_factory=list)
+
+@dataclass
+>>>>>>> Stashed changes
 class Category:
     name: str = ""
     category_sum: int = field(default=0)

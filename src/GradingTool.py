@@ -32,15 +32,23 @@ def main() -> None:
     
     dpg.create_context()
     dpg.configure_app(
-        docking=True, docking_space=True, load_init_file="custom_layout.ini"
+        docking=True, docking_space=True, init_file="custom_layout.ini"
     )
+<<<<<<< Updated upstream
     dpg.create_viewport(title="GradeTool")
+=======
+    dpg.create_viewport(title="GradeTool", width=1080)
+>>>>>>> Stashed changes
     
     student_window = dpg.generate_uuid()
     category_window = dpg.generate_uuid()
     button_window = dpg.generate_uuid()
     data_window = dpg.generate_uuid()
 
+<<<<<<< Updated upstream
+=======
+    
+>>>>>>> Stashed changes
     ######## STUDENT VIEW ########
     with dpg.window(label="Opiskelijat", tag=student_window):
         dpg.add_button(label="SAVE", width=-1, callback=gui.writeToJsonFile, user_data=studentWithErrors)
@@ -49,13 +57,13 @@ def main() -> None:
             dpg.add_listbox(students, num_items=25, tag="student_view", callback=gui.select_student, user_data=[studentWithErrors, categoryList, student_list])
         
     ######## ERROR VIEW ########
-    with dpg.window(label="Virheet", tag=category_window) as cWindow:
+    with dpg.window(label="Virheet", tag=category_window, no_scrollbar=False) as cWindow:
         with dpg.group(tag="error_view"):
             for category in categoryList:
                 with dpg.tree_node(label=category.name):
                         with dpg.table(
                             header_row=True,
-                            policy=dpg.mvTable_SizingStretchSame,
+                            policy=dpg.mvTable_SizingStretchProp,
                             resizable=True,
                             borders_innerV=True,
                             borders_outerV=True,
@@ -69,8 +77,13 @@ def main() -> None:
                             for error in category.errors:
                                 with dpg.table_row():
                                     dpg.add_text(error.text, tag=error.text)
+<<<<<<< Updated upstream
                                     dpg.add_input_int(min_value=-1, min_clamped=True, default_value=0, width=100, tag=error._id, callback=gui.mistakeSelected,  user_data=[studentWithErrors, student_list])
                                     
+=======
+                                    dpg.add_input_int(min_value=-1, min_clamped=True, default_value=0, width=80, tag=error._id, callback=gui.mistakeSelected,  user_data=[studentWithErrors, student_list, categoryList])
+                      
+>>>>>>> Stashed changes
     ######## COMMENT VIEW ########
     with dpg.window(label="Feedback", tag=button_window) as bWindow:
         dpg.add_input_text(multiline=True, height=-1, width=-1)
@@ -113,6 +126,7 @@ def main() -> None:
     ######## STARTING GUI ########
     #dpg.show_item_registry()
     dpg.setup_dearpygui()
+    dpg.set_viewport_pos([0,0])
     dpg.show_viewport()        
     dpg.start_dearpygui()    
     # while dpg.is_dearpygui_running():
