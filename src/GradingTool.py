@@ -47,23 +47,24 @@ def main() -> None:
    
     ######## INITIALIZING DATA AND DPG ########
     categoryList = gui.read_problem_json("Problem_list.json")
-    studentWithErrors = gui.readJsonFile()
-    print(studentWithErrors)
+    # gui.read_json_file()
+    #print(category)
+    studentWithErrors = gui.readGradedFile()
     student_list = gui.add_files_in_folder(dirname)
     students = tuple(student.name for student in student_list)
     
     dpg.create_context()
     dpg.configure_app(
-        docking=True, docking_space=True, load_init_file="custom_layout.ini"
+        docking=True, docking_space=True, init_file="custom_layout.ini"
     )
-    dpg.create_viewport(title="GradeTool", width=1500)
+    dpg.create_viewport(title="GradeTool", width=1080)
     
     student_window = dpg.generate_uuid()
     category_window = dpg.generate_uuid()
     button_window = dpg.generate_uuid()
     data_window = dpg.generate_uuid()
 
-    dpg.set_global_font_scale(1.25)
+    
     ######## STUDENT VIEW ########
     with dpg.window(label="Opiskelijat", tag=student_window):
         dpg.add_button(label="SAVE", width=-1, callback=gui.writeToJsonFile, user_data=studentWithErrors)
@@ -72,13 +73,13 @@ def main() -> None:
             dpg.add_listbox(students, num_items=25, tag="student_view", callback=gui.select_student, user_data=[studentWithErrors, categoryList, student_list])
         
     ######## ERROR VIEW ########
-    with dpg.window(label="Virheet", tag=category_window) as cWindow:
+    with dpg.window(label="Virheet", tag=category_window, no_scrollbar=False) as cWindow:
         with dpg.group(tag="error_view"):
             for category in categoryList:
                 with dpg.tree_node(label=category.name, user_data=category.name):
                         with dpg.table(
                             header_row=True,
-                            policy=dpg.mvTable_SizingStretchSame,
+                            policy=dpg.mvTable_SizingStretchProp,
                             resizable=True,
                             borders_innerV=True,
                             borders_outerV=True,
@@ -92,7 +93,7 @@ def main() -> None:
                             for error in category.errors:
                                 with dpg.table_row():
                                     dpg.add_text(error.text, tag=error.text)
-                                    dpg.add_input_int(min_value=-1, min_clamped=True, default_value=0, width=100, tag=error._id, callback=gui.mistakeSelected,  user_data=[studentWithErrors, student_list, categoryList])
+                                    dpg.add_input_int(min_value=-1, min_clamped=True, default_value=0, width=80, tag=error._id, callback=gui.mistakeSelected,  user_data=[studentWithErrors, student_list, categoryList])
                       
     ######## COMMENT VIEW ########
     with dpg.window(label="Feedback", tag=button_window) as bWindow:
@@ -146,11 +147,13 @@ def main() -> None:
     #dpg.show_item_registry()
     #dpg.show_style_editor()
     dpg.setup_dearpygui()
+    dpg.set_viewport_pos([0,0])
     dpg.show_viewport()        
-    #dpg.start_dearpygui()
-    while dpg.is_dearpygui_running():
-        dpg.render_dearpygui_frame()
-  
+    dpg.start_dearpygui()    
+    # while dpg.is_dearpygui_running():
+    #     jobs = dpg.get_callback_queue()
+    #     dpg.run_callbacks(jobs)
+    #     dpg.render_dearpygui_frame()
     dpg.destroy_context()
 
 if __name__ == "__main__":

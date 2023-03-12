@@ -7,7 +7,7 @@ class StudentInfo:
     group: str
     feedback: list = field(default_factory=list) 
     grade: int = field(default_factory=int)
-    errorpoints: Union[str, int] = field(default_factory= str, init=False)
+    errorpoints: int = field(default=0)
     errorlist: dict = field(default_factory=dict)
     def __str__(self) -> str:
         return(f"Student name: {self.name}, group: {self.group}")
@@ -26,19 +26,29 @@ class ErrorInfo:
         return(f"{self._id}, {self.text}, {self.feedback}, {self.values}, {self.amount}")
 
 @dataclass
-class Category():
+class Students:
+    studentList: list[StudentInfo] = field(default_factory=list)
+
+@dataclass
+class Category:
     name: str = ""
     category_sum: int = field(default=0)
     errors: list[ErrorInfo] = field(default_factory=list)
+    
+    # def __post_init__(self):
+    #     data = []
+    #     for error in self.errors:
+    #         data.append(ErrorInfo(**error))
+    #     self.errors = data
     
     def __str__(self) -> str:
         return f"{self.errors}"
     
     def getName(self):
         return self.name
-    def printErrors(self):
-        for error in self.errors:
-            print(error.text)
+    
+    def findError(self, error_id) -> ErrorInfo:
+        return (x for x in self.errors if (x._id == error_id))
     
 @dataclass
 class ExamInfo(StudentInfo): 

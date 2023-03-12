@@ -1,5 +1,13 @@
 {
-    "Nikkinen Juho": {
-        "TR0201": 1
+<<<<<<< Updated upstream
+    "Nykänen Venla": {
+        "TO0100": 2
+    },
+    "Ojanen Markus": {
+        "TO0101": 2
     }
+=======
+    "TO0101": {},
+    "Nikkinen Juho": {}
+>>>>>>> Stashed changes
 }
