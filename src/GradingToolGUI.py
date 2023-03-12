@@ -37,14 +37,6 @@ def initialize_font():
     return default_font, hl_font, title_font
 
 
-<<<<<<< Updated upstream
-
-#Adding the folder files to student
-def add_files_in_folder_default(sender, app_data):
-    student_list = []
-    files = os.listdir(app_data["current_path"])
-=======
->>>>>>> Stashed changes
 
 
 
@@ -72,17 +64,6 @@ def select_student(sender, app_data, user_data):
     
     if (studentObject != None):
         updateDataWindow(studentObject)
-<<<<<<< Updated upstream
-
-def findStudent(student_name, student_list) -> StudentInfo:
-    return next((x for x in student_list if x.name == student_name), None)
-
-
-def updateDataWindow(studentObject):
-    dpg.set_value("level", studentObject.group)
-    dpg.set_value("student_grade", str(MAX_GRADE[studentObject.group]))
-    
-=======
     
     print(studentWithErrors)
     # for key, values in studentWithErrors.items():
@@ -96,7 +77,6 @@ def updateDataWindow(studentObject):
     dpg.set_value("feedback_input", convertFeedbackToString(studentObject.feedback))
     dpg.set_value("error_points", studentObject.errorpoints)
 
->>>>>>> Stashed changes
 def updateTable(categoryList, studentWithErrors, student):
     for category in categoryList:
         for error in category.errors:
@@ -106,9 +86,7 @@ def updateTable(categoryList, studentWithErrors, student):
                 dpg.set_value(error._id, 0)
     
 def writeToJsonFile(sender, app_data, studentWithErrors):
-
-<<<<<<< Updated upstream
-=======
+    pass
  
     
 def mistakeSelected(sender, app_data, user_data):
@@ -206,7 +184,6 @@ def checkErrorValue(studentWithErrors, current_values):
 
 #Writing graded student to master.json
 def writeToJsonFile(sender, app_data, studentWithErrors):    
->>>>>>> Stashed changes
     try:
         with open(FILENAME, "w", encoding="utf-8") as outfile:
             json.dump(studentWithErrors, outfile, indent=4, ensure_ascii=False)
@@ -234,16 +211,6 @@ def mistakeSelected(sender, app_data, user_data):
 def readGradedFile():
     try:
         if os.path.isfile(FILENAME):
-<<<<<<< Updated upstream
-            with open(FILENAME, encoding="utf-8") as file:
-                if (os.stat(FILENAME).st_size > 0):
-                    graded_dict = json.load(file)
-                    print(graded_dict) 
-                else: 
-                    graded_dict = {}
-            
-                       
-=======
 
             with open(FILENAME, "r", encoding="utf-8") as file:
                 try:
@@ -251,12 +218,11 @@ def readGradedFile():
                 except:
                     studentWithErrors = nested_defaultdict()
                 
->>>>>>> Stashed changes
     except FileNotFoundError as e:
         print("File not found ", e)
     
 
-    return graded_dict
+    return studentWithErrors
 
 
 
@@ -308,21 +274,6 @@ def read_problem_json(filename):
     return categoryList
 
 
-<<<<<<< Updated upstream
-def read_json_file():
-    with open("Problem_list.json", encoding="utf-8") as file:
-        problem_list = file.read()
-        parsed_file = parse_json_file(problem_list)    
-        category = dict_to_category(parsed_file)    
-    
-    print(category)
-def parse_json_file(json_string: str) -> Dict[Any, Any]:
-    return json.loads(json_string)["violations"]
-
-def dict_to_category(parsed_json_dict: Dict[Any, Any]) -> Category:
-    return Category(**parsed_json_dict)
-
-=======
 def findStudent(student_name, student_list) -> StudentInfo:
     return next((x for x in student_list if x.name == student_name), None)
 
@@ -337,7 +288,6 @@ def findTheValues(category, error_id):
 
 def tree():
     return defaultdict(tree)
->>>>>>> Stashed changes
 
 
 

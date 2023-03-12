@@ -34,21 +34,14 @@ def main() -> None:
     dpg.configure_app(
         docking=True, docking_space=True, init_file="custom_layout.ini"
     )
-<<<<<<< Updated upstream
-    dpg.create_viewport(title="GradeTool")
-=======
     dpg.create_viewport(title="GradeTool", width=1080)
->>>>>>> Stashed changes
     
     student_window = dpg.generate_uuid()
     category_window = dpg.generate_uuid()
     button_window = dpg.generate_uuid()
     data_window = dpg.generate_uuid()
 
-<<<<<<< Updated upstream
-=======
     
->>>>>>> Stashed changes
     ######## STUDENT VIEW ########
     with dpg.window(label="Opiskelijat", tag=student_window):
         dpg.add_button(label="SAVE", width=-1, callback=gui.writeToJsonFile, user_data=studentWithErrors)
@@ -77,13 +70,8 @@ def main() -> None:
                             for error in category.errors:
                                 with dpg.table_row():
                                     dpg.add_text(error.text, tag=error.text)
-<<<<<<< Updated upstream
-                                    dpg.add_input_int(min_value=-1, min_clamped=True, default_value=0, width=100, tag=error._id, callback=gui.mistakeSelected,  user_data=[studentWithErrors, student_list])
-                                    
-=======
                                     dpg.add_input_int(min_value=-1, min_clamped=True, default_value=0, width=80, tag=error._id, callback=gui.mistakeSelected,  user_data=[studentWithErrors, student_list, categoryList])
                       
->>>>>>> Stashed changes
     ######## COMMENT VIEW ########
     with dpg.window(label="Feedback", tag=button_window) as bWindow:
         dpg.add_input_text(multiline=True, height=-1, width=-1)
