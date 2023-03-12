@@ -1,0 +1,750 @@
+
+{
+	"violations": [
+
+		{
+			"ID": "TO0100",
+			"text": "Kovakoodattu tulos",
+			"feedback": "Palautuksessa on kovakoodattu analysin tuloksia.",
+			"category": "Toiminnallisuus",
+			"error_values": {
+				"1": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "TO0101",
+			"text": "Kovakoodattu tiedoston nimi",
+			"feedback": "Tiedoston nimi on kovakoodattu.",
+			"category": "Toiminnallisuus",
+			"error_values": {
+				"1": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "TO0102",
+			"text": "Ohjelma kaatuu kesken suorituksen",
+			"feedback": "Ohjelma kaatuu kesken suorituksen.",
+			"category": "Toiminnallisuus",
+			"error_values": {
+				"1": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "TO0103",
+			"text": "Ohjelma tuottaa eri tuloksen kuin tarkistusohjelma",
+			"feedback": "Ohjelma ei toimi tehtävänannon mukaan syötteillä XX.",
+			"category": "Toiminnallisuus",
+			"error_values": {
+				"1": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "TO0104",
+			"text": "goto tai muu kielletty komento",
+			"feedback": "Ohjelmassa on käytetty komentoa X.",
+			"category": "Toiminnallisuus",
+			"error_values": {
+				"1": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "TR0200",
+			"text": "Kooditiedosto puuttuu tai on tyhjä",
+			"feedback": "Palautuksesta puuttuu vaadittuja tiedostoja.",
+			"category":"Tiedostorakenne",
+			"error_values": {
+				"1": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "TR0201",
+			"text": "Otsikkotiedoston (.h) sisällytys muualla kuin lähdekooditiedostoissa",
+			"feedback": "Otsikkotiedostojen (.h) sisällystä ei ole tehty lähdekooditiedostoissa.",
+			"category":"Tiedostorakenne",
+			"error_values": {
+				"1": 0.7,
+				"3": 1,
+				"All": 1
+			}
+		},
+		{
+			"ID": "TR0202",
+			"text": "Ei ole ehdollista sisällytystä (include guards)",
+			"feedback": "Otsikkotiedostossa ei ole ehdollista sisällytystä (include guards).",
+			"category":"Tiedostorakenne",
+			"error_values": {
+				"1": 0.7,
+				"3": 1,
+				"All": 1
+			}
+		},
+		{
+			"ID": "TR0203",
+			"text": "Sisällytetään kurssilla käsittelemätön kirjasto (myös minimitaso)",
+			"feedback": "Sisällytetään kurssilla käsittelemätön kirjasto, kielletty Tyyliohjeen kohdassa 1.1.",
+			"category":"Tiedostorakenne",
+			"error_values": {
+				"1": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "AK0300",
+			"text": "Kooditiedostosta puuttuu kokonaan alkukommentti",
+			"feedback": "Kooditiedostosta puuttuu alkukommentti.",
+			"category":"Alkukommentit",
+			"error_values": {
+				"1": 2,
+				"All":2
+			},
+			"exclude": [
+				"AK0302",
+				"AK0303",
+				"AK0304"
+			]
+		},
+		{
+			"ID": "AK0301",
+			"text": "Makefilesta puuttuu kokonaan alkukommentti",
+			"feedback": "Makefilesta puuttuu alkukommentti.",
+			"category":"Alkukommentit",
+			"error_values": {
+				"1": 0.7,
+				"All": 0.7
+			}
+		},
+		{
+			"ID": "AK0302",
+			"text": "Alkukommentista puuttuu nimi ja opiskelijanumero",
+			"feedback": "Alkukommentista puuttuu tekijä ja opiskelijanumero.",
+			"category":"Alkukommentit",
+			"error_values": {
+				"1": 0.7,
+				"All": 2
+			}
+		},
+		{
+			"ID": "AK0303",
+			"text": "Alkukommentista puuttuu pvm",
+			"feedback": "Alkukommentista puuttuu päivämäärätietoja.",
+			"category":"Alkukommentit",
+			"error_values": {
+				"1": 0,
+				"All": 0
+			}
+		},
+		{
+			"ID": "AK0304",
+			"text": "Alkukommentista puuttuu loppuosa",
+			"feedback": "Alkukommentista puuttuu vakuutusteksti ja yhteistyötiedot.",
+			"category":"Alkukommentit",
+			"error_values": {
+				"1": 0.7,
+				"3": 1,
+				"4": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "AL0400",
+			"text": "Suurin osa aliohjelman toiminnallisuudesta main:ssa",
+			"feedback": "Suurin osa aliohjelman X toiminnallisuudesta on main:ssa.",
+			"category":"Aliohjelmarakenne",
+			"error_values": {
+				"1": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "AL0401",
+			"text": "Ei valikkoaliohjelmaa",
+			"feedback": "Ohjelmassa ei ole valikko-aliohjelmaa.",
+			"category":"Aliohjelmarakenne",
+			"error_values": {
+				"1": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "AL0402",
+			"text": "Valikko aliohjelma väärin (esim. paaohjelman osana, kirjastossa)",
+			"feedback": "Valikko-aliohjelma ei ole erillisenä aliohjelmana pääohjelmatiedostossa.",
+			"category":"Aliohjelmarakenne",
+			"error_values": {
+				"1": 0.7,
+				"All": 0.7
+			}
+		},
+		{
+			"ID": "AL0403",
+			"text": "Tiedostonimen kysyvä aliohjelma puuttuu",
+			"feedback": "Ohjelmassa ei ole tiedoston nimeä kysyvää aliohjelmaa.",
+			"category":"Aliohjelmarakenne",
+			"error_values": {
+				"1": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "AL0404",
+			"text": "Ylimääräinen turha tai käyttämätön aliohjelma",
+			"extra_comment": "Esim. rivimäärä-aliohjelma tai esim. kysyNimi-aliohjelmaa ei käytetä",
+			"feedback": "Ohjelmassa on turha/käyttämätön aliohjelma XX.",
+			"category":"Aliohjelmarakenne",
+			"error_values": {
+				"1": 1,
+				"2": 1.5,
+				"3": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "AL0405",
+			"text": "Aliohjelma kutsuu toisen valinnan aliohjelmaa (esim. tallennus analyysiä)",
+			"feedback": "Aliohjelma XX kutsuu valinnan XX aliohjelmaa.",
+			"category":"Aliohjelmarakenne",
+			"error_values": {
+				"1": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "AL0406",
+			"text": "Aliohjelman esittelyssä/määrittelyssä ongelma tai puuttuvat.",
+			"extra_comment": "Jos esittelyt puuttuvat, niin EiOk, monta määrittelyä tai esittelyä samalle aliohjelmalle tai ne ovat keskenään ristiriidassa.",
+			"feedback": "Ohjelmassa on useampi määrittely aliohjelmalle XX. / Esittely aliohjelmalle XX puuttuu.",
+			"category":"Aliohjelmarakenne",
+			"error_values": {
+				"1": 0.7,
+				"2": 1,
+				"4": 1.5,
+				"7": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "AL0407",
+			"text": "Rekursio tai sisäkkäinen aliohjelma",
+			"feedback": "Aliohjelmassa XX on kieletty rakenne rekursio/sisäkkäinen aliohjelma.",
+			"category":"Aliohjelmarakenne",
+			"error_values": {
+				"1": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "PO0500",
+			"text": "Pääohjelmassa muu kuin if-rakenne (esim. switch-case)",
+			"feedback": "Valikossa ehtolausetta ei ole toteutettu if:llä.",
+			"category":"Perusoperaatiot",
+			"error_values": {
+				"1": 0.7,
+				"All": 0.7
+			}
+		},
+		{
+			"ID": "PO0501",
+			"text": "Valikossa syöte muulla kuin scanf",
+			"feedback": "Valikossa syötettä ei kysytä scanf:llä.",
+			"category":"Perusoperaatiot",
+			"error_values": {
+				"1": 1,
+				"All": 1
+			}
+		},
+		{
+			"ID": "PO0502",
+			"text": "Silmukassa indeksi muuttuu muulla kuin 1",
+			"feedback": "Silmukassa indeksiä muutetaan muulla arvolla kuin 1.",
+			"category":"Perusoperaatiot",
+			"error_values": {
+				"1": 1,
+				"All": 1
+			}
+		},
+		{
+			"ID": "PO0503",
+			"text": "Silmukka menee muistialueen yli ja toiminta satunnaista",
+			"extra_comment": "Jos edes joskus toimii väärin/kaatuu niin valitse tämä.",
+			"feedback": "Silmukka askeltaa varatun muistialueen yli.",
+			"category":"Perusoperaatiot",
+			"error_values": {
+				"1": 1,
+				"2": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "TV0600",
+			"text": "Globaalimuuttuja",
+			"feedback": "Ohjelmassa on globaalimuuttuja XX.",
+			"category": "Tiedonvälitys",
+			"error_values": {
+				"1": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "TV0601",
+			"text": "Tallennukseen lähetetään luettu tieto, ei analysoitu",
+			"feedback": "Tallennus aliohjelmaan lähetetään luetut tiedot, eikä analysoituja tietoja.",
+			"category":"Tiedonvälitys",
+			"error_values": {
+				"1": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "TV0602",
+			"text": "Parametrissa ongelma tai virhe",
+			"extra_comment": "Esimerkiksi parametrien lukumäärät tai tietotyypit menevät ristiin kutsun ja määrittelyn välillä.",
+			"feedback": "Aliohjelman XX parametrissa XX...",
+			"category":"Tiedonvälitys",
+			"error_values": {
+				"1": 0.7,
+				"2": 1,
+				"4": 1.5,
+				"All": 2
+			}
+		},
+		{
+			"ID": "TV0603",
+			"text": "Paluuarvossa pieni ongelma tai virhe",
+			"extra_comment": "Esimerkiksi muistia varaava aliohjelma ei palauta mitään (pitää palauttaa osoitin) tai tietotyypit menevät ristiin vastaanottamisen ja palautuksen välillä.",
+			"feedback": "Aliohjelman XX paluuarvo XX...",
+			"category":"Tiedonvälitys",
+			"error_values": {
+				"1": 1,
+				"2": 1.5,
+				"4": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "TV0604",
+			"text": "Paluuarvossa fataali ongelma (esim. aliohjelman staattinen taulukko)",
+			"extra_comment": "Esimerkiksi paluuarvo on aliohjelmassa staattisesti varattu merkkijono.",
+			"feedback": "Aliohjelman XX paluuarvo XX...",
+			"category":"Tiedonvälitys",
+			"error_values": {
+				"1": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "TV0605",
+			"text": "return puuttuu kokonaan",
+			"feedback": "Aliohjelmasta XX puuttuu return komento.",
+			"category":"Tiedonvälitys",
+			"error_values": {
+				"1": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "TK0700",
+			"text": "Tiedosto luetaan muualla kuin lukemisvalinnassa",
+			"feedback": "Tiedosto luetaan lukemisen sijaan/lisäksi valinnassa XX.",
+			"category":"Tiedostonkäsittely",
+			"error_values": {
+				"1": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "TK0701",
+			"text": "Tiedosto kirjoitetaan muualla kuin kirjoitusvalinnassa",
+			"feedback": "Tulokset kirjoitetaan tiedostoon tallenuksen sijaan valinnassa XX.",
+			"category":"Tiedostonkäsittely",
+			"error_values": {
+				"1": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "TK0702",
+			"text": "Tiedosto sulkematta",
+			"feedback": "Tiedostoa ei suljeta aliohjelmassa XX.",
+			"category":"Tiedostonkäsittely",
+			"error_values": {
+				"1": 1,
+				"2": 1.5,
+				"4": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "TK0703",
+			"text": "Tiedoston sulku eri aliohjelmassa kuin avaus",
+			"feedback": "Tiedoston avataus ja sulku eri aliohjelmissa.",
+			"category":"Tiedostonkäsittely",
+			"error_values": {
+				"1": 1,
+				"2": 1.5,
+				"4": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "TK0704",
+			"text": "Tiedosto avataan muualla kuin lukemis- tai kirjoitusaliohjelmassa",
+			"feedback": "Tiedosto avataan muualla kuin lukemis- tai kirjoitusaliohjelmassa.",
+			"category":"Tiedostonkäsittely",
+			"error_values": {
+				"1": 0.7,
+				"All": 1
+			}
+		},
+		{
+			"ID": "TK0705",
+			"text": "Perus/Tavoite, Valinta 3 tehty vain 1 aliohjelmalla tai jako väärin",
+			"extra_comment": "Jako väärin tarkoittaa sitä että toinen on turha tai jaosta ei ole hyötyä (tarvittaessa kysy)",
+			"feedback": "Tiedoston kirjoittamista ei ole tehty tehtävänannon mukaisesti kahdella .",
+			"category":"Tiedostonkäsittely",
+			"error_values": {
+				"1": 1,
+				"All": 1
+			}
+		},
+		{
+			"ID": "PO0505",
+			"text": "Ei vakiokokoisen taulukon koko alustettu etukäteen",
+			"feedback": "Dynaamisesti muuttuvan taulukon koko on kovakoodattu etukäteen.",
+			"category":"Tietorakenteet",
+			"error_values": {
+				"1": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "PO0599",
+			"text": "Taulukon koko muulla kuin vakiolla",
+			"feedback": "Taulukon kokoa ei ole alustettu vakiolla, vaan muuttujalla tai numeroarvolla.",
+			"category":"Tietorakenteet",
+			"error_values": {
+				"1": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "TR0800",
+			"text": "Tietorakennetta ei ole tyhjennetty ennen täyttöä",
+			"feedback": "Tietorakennetta ei ole tyhjenntty ennen uudelleen lukemista/analysointia.",
+			"category":"Tietorakenteet",
+			"error_values": {
+				"1": 0.7,
+				"2": 1,
+				"All": 1
+			}
+		},
+		{
+			"ID": "TR0801",
+			"text": "Ei lainkaan linkitettyä listaa",
+			"feedback": "Ohjelmassa ei ole hyödynnetty lainkaan linkitettyä listaa.",
+			"category":"Tietorakenteet",
+			"error_values": {
+				"1": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "TR0802",
+			"text": "Tulostietorakenne puuttuu tai on tehtävänannon vastainen",
+			"extra_comment": "Valinta 2 minimitaso taulukko, perustasolla sanaluokat tietuetaulukko ja tilastot tietueessa, tavoitetasolla valinta 4 (int) taulukko ja 5 matriisi",
+			"feedback": "Käytetty tulostietorakenne ei ole tehtävänannon mukainen.",
+			"category":"Tietorakenteet",
+			"error_values": {
+				"1": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "TR0803",
+			"text": "Tilastoanalyysin tulokset erillisissä muuttujissa",
+			"feedback": "Tilastoanalyysin tulokset eivät ole tietueessa, vaan erillisissä muuttujissa.",
+			"category":"Tietorakenteet",
+			"error_values": {
+				"1": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "TR0804",
+			"text": "Tietueessa virhe esim. tietotyypit eivät ole järkeviä",
+			"feedback": "Tietueessa XX muuttujien tietotyypit eivät ole järkeviä.",
+			"category":"Tietorakenteet",
+			"error_values": {
+				"1": 0.7,
+				"3": 1,
+				"All": 1
+			}
+		},
+		{
+			"ID": "DM0810",
+			"text": "Muisti vapauttamatta",
+			"feedback": "Ohjelma vuotaa muistia eli käytettyjä tietorakenteita ei vapauteta.",
+			"category":"Dynaaminen muistinhallinta",
+			"error_values": {
+				"1": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "DM0811",
+			"text": "Muistinvaraaminen tehty väärälle tietotyypille",
+			"feedback": "Muistinvaraaminen on tehty eri tietotyypille kuin käytetty muistialue.",
+			"category":"Dynaaminen muistinhallinta",
+			"error_values": {
+				"1": 0.7,
+				"All": 2
+			}
+		},
+		{
+			"ID": "DM0812",
+			"text": "Tavoitetasolla taulukon dynaaminen kasvattaminen ei ole realloc:lla",
+			"feedback": "Taulukon dynaaminen kasvattaminen tehty muulla kuin realloc:lla",
+			"category":"Dynaaminen muistinhallinta",
+			"error_values": {
+				"1": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "DM0813",
+			"text": "Osoitinta ei ole asetettu NULL:ksi vapauttamisen jälkeen",
+			"feedback": "Osoitinta ei ole asetettu NULL:ksi vapauttamisen jälkeen",
+			"category":"Dynaaminen muistinhallinta",
+			"error_values": {
+				"1": 0.7,
+				"All": 1
+			}
+		},
+		{
+			"ID": "PK0900",
+			"text": "Virheentarkistus puuttuu tiedoston avaamisesta",
+			"feedback": "Tiedoston avaamisessa ei ole virheenkäsittelijää.",
+			"category": "Virheenkäsittely",
+			"error_values": {
+				"1": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "PK0901",
+			"text": "Virheentarkistus puuttuu muistinvaraamisesta",
+			"feedback": "Muistinvaraamisessa ei ole virheenkäsittelijää.",
+			"category": "Virheenkäsittely",
+			"error_values": {
+				"1": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "PK0902",
+			"text": "Ei perroria virheviestissä",
+			"feedback": "Virheviestiin ei ole käytetty perror-komentoa.",
+			"category": "Virheenkäsittely",
+			"error_values": {
+				"1": 0.7,
+				"All": 1
+			}
+		},
+		{
+			"ID": "PK0903",
+			"text": "Ei exit-komentoa",
+			"feedback": "Muistinvaraamisen tai tiedostonavaamisen Virheenkäsittelijässä ei ole exit-käskyä.",
+			"category": "Virheenkäsittely",
+			"error_values": {
+				"1": 0.7,
+				"All": 1
+			}
+		},
+		{
+			"ID": "PK0904",
+			"text": "Ennen analyysiä/kirjoittamista ei tarkisteta datan olemassaoloa",
+			"feedback": "Ohjelmassa ei tehdä virheen ennaltaehkäisyä tarkistamalla analyysissä/kirjoituksessa tarvittavien tietojen olemassa oloa.",
+			"category": "Virheenkäsittely",
+			"error_values": {
+				"1": 0.7,
+				"2": 1,
+				"3": 1.5,
+				"4": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "PK0905",
+			"text": "Datan olemassaolon tarkistus vain aliohjelmassa",
+			"feedback": "Datan olemassa olo tarkistetaan pääohjelman sijaan aliohjelmassa.",
+			"category": "Virheenkäsittely",
+			"error_values": {
+				"1": 0.7,
+				"All": 1
+			}
+		},
+		{
+			"ID": "AT1001",
+			"text": "Tilastotiedoissa etsittävää sanaa ei alusteta lainkaan",
+			"feedback": "Analyysissä ei alusteta XX sanaa.",
+			"category":"Analyysin toteutus",
+			"error_values": {
+				"1": 0.7,
+				"All": 0.7
+			},
+			"exclude":["AT1002"]
+		},
+		{
+			"ID": "AT1002",
+			"text": "Pisintä/Lyhyintä pituutta ei alusteta",
+			"feedback": "Analyysissä ei alusteta arvoja minimin ja/tai maksimin päivämäärille.",
+			"category":"Analyysin toteutus",
+			"error_values": {
+				"1": 0.7,
+				"All": 0.7
+			},
+			"exclude":["AT1001"]
+		},
+		{
+			"ID": "AT1003",
+			"text": "Arvojen alustus muulla kuin ensimmäisellä alkiolla",
+			"feedback": "Analyysissä etsittäviä arvoja ei alusteta datan ensimmäisen alkion arvoilla.",
+			"category":"Analyysin toteutus",
+			"error_values": {
+				"1": 0.7,
+				"3": 1,
+				"All": 1
+			}
+		},
+		{
+			"ID": "AT1004",
+			"text": "Yhtä suurista arvoista ei valita oikeaa arvoa",
+			"feedback": "Yhtä suurista arvoista ei valita arvoa tehtävänannon määrittämällä tavalla.",
+			"category":"Analyysin toteutus",
+			"error_values": {
+				"1": 0.7,
+				"All": 0.7
+			}
+		},
+		{
+			"ID": "AT1005",
+			"text": "Laskennan tulosta muutetaan vakiolla, esim. +1 tai -1, ilman syytä",
+			"feedback": "Analyysissä tulosta muutetaan vakion avulla vastaamaan kysyttyä arvoa.",
+			"category":"Analyysin toteutus",
+			"error_values": {
+				"1": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "AT1006",
+			"text": "Analyysissä pieni if-pyramidi (tai swtich-case)",
+			"feedback": "Analyysi on toteutettu monimutkaisesti ehtolauseilla.",
+			"category":"Analyysin toteutus",
+			"error_values": {
+				"1": 0.7,
+				"2": 0.8,
+				"3": 0.9,
+				"4": 1,
+				"All": 1
+			}
+		},
+		{
+			"ID": "AT1007",
+			"text": "Koko analyysi pelkällä if-pyramidilla (tai swtich-case)",
+			"feedback": "Analyysin koko toteutus perustuu useisiin ehtolauseisiin.",
+			"category":"Analyysin toteutus",
+			"error_values": {
+				"1": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "AT1008",
+			"text": "Analyysi väärässä valinnassa",
+			"feedback": "Analyysin toteutetaan muualla kuin analyysin mukaisessa valinnassa.",
+			"category":"Analyysin toteutus",
+			"error_values": {
+				"1": 1,
+				"2": 1.5,
+				"3": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "MF1100",
+			"text": "Yhden rivin Makefile",
+			"feedback": "Makefilessa jokaista lähdekooditiedostoa ei ole käännetty erikseen.",
+			"category":"Makefile (PERUS/TAVOITE)",
+			"error_values": {
+				"1": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "MF1101",
+			"text": "Käännösoptiot puuttuvat tai ovat eri kuin ohjeissa",
+			"feedback": "Makefilen käännöskäskyt eivät vastaa ohjeita -Wall -pedantic -std=c99.",
+			"category":"Makefile (PERUS/TAVOITE)",
+			"error_values": {
+				"1": 1,
+				"All": 1
+			}
+		},
+		{
+			"ID": "MF1102",
+			"text": "Tiedostoriippuvuudet puuttuvat",
+			"feedback": "Makefilesta puuttuvat tiedostoriippuvuudet.",
+			"category":"Makefile (PERUS/TAVOITE)",
+			"error_values": {
+				"1": 0.7,
+				"All": 1
+			}
+		},
+		{
+			"ID": "MF1103",
+			"text": "Binääriä ei tehdä linkittämällä objektitiedostoja",
+			"feedback": "Suoritettavaa binääritiedostoa ei tehdä linkittämällä objektitiedostoja.",
+			"category":"Makefile (PERUS/TAVOITE)",
+			"error_values": {
+				"1": 2,
+				"All": 2
+			}
+		},
+		{
+			"ID": "MF1104",
+			"text": "Objektitiedosto nimetty eri nimellä kuin lähdekooditiedosto",
+			"feedback": "Objektitiedostoa ei ole nimetty samalla nimellä kuin lähdekooditiedosto.",
+			"category":"Makefile (PERUS/TAVOITE)",
+			"error_values": {
+				"1": 1,
+				"All": 1
+			}
+		},
+		{
+			"ID": "MF1105",
+			"text": "Makefilessä muu ongelma, esim. kirjoitusvirhe (kysy)",
+			"feedback": "XX.",
+			"category":"Makefile (PERUS/TAVOITE)",
+			"error_values": {
+				"1": 0,
+				"All": 0
+			}
+		},
+		{
+			"ID": "ST1000",
+			"text": "Muu epäselvä ratkaisu (liitä mukaan koodi)",
+			"feedback": "Aliohjelmassa X käytetty ratkaisu ei ole ylläpidettävä eikä ymmärrettävä.",
+			"category":"Muu ongelma",
+			"error_values": {
+				"1": 0,
+				"All": 0
+			}
+		}
+	]
+}

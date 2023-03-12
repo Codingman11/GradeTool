@@ -13,19 +13,7 @@ from tkinter import filedialog
 #   V0.1.3 Data Window added and Feedback window added.
 #   V0.1.4 Feedback window added and student's feedback based on mistakes are added. 
 MAX_GRADE = {"minimi": 1, "perus": 3, "tavoite": 5}
-CATEGORY_TEXTS = [
-                "toiminnallisuus tehtäväksiannon mukaan ja CodeGradesta läpi",
-                "tiedostorakenne useita tiedostoja",
-                "ohjeiden mukaiset alkukommentit",
-                "ohjelmarakenne pääohjelma ja aliohjelmat",
-                "perusoperaatiot tulostus, syöte, valintarakenne, toistorakenne",
-                "tiedonvälitys parametrit ja paluuarvot, ei globaaleja muuttujia",
-                "tiedostonkäsittely luku ja kirjoittaminen",
-                "tietorakenteet lista, luokka ja olio",
-                "poikkeustenkäsittely tiedostonkäsittelyssä",
-                "analyysien toteutus",
-                "toteutuksen selkeys, ymmärrettävä, ylläpidettävä ja laajennettava",
-            ]
+
 #DEFAULT_FONT, NORMAL_FONT, TITLE_FONT = gui.initialize_font()
 def askFile(student_list): 
     student_list.clear()
@@ -46,11 +34,12 @@ def main() -> None:
     #default_font, hl_font, title_font = gui.initialize_font()
    
     ######## INITIALIZING DATA AND DPG ########
-    categoryList = gui.read_problem_json("Problem_list.json")
+    categoryList, category_dict = gui.read_problem_json("Problem_list_C.json")
     # gui.read_json_file()
     #print(category)
     studentWithErrors = gui.readGradedFile()
-    student_list = gui.add_files_in_folder(dirname)
+    
+    student_list = gui.add_files_in_folder(dirname, studentWithErrors)
     students = tuple(student.name for student in student_list)
     
     dpg.create_context()
@@ -67,7 +56,7 @@ def main() -> None:
     
     ######## STUDENT VIEW ########
     with dpg.window(label="Opiskelijat", tag=student_window):
-        dpg.add_button(label="SAVE", width=-1, callback=gui.writeToJsonFile, user_data=studentWithErrors)
+        dpg.add_button(label="SAVE", width=-1, callback=gui.writeToJsonFile, user_data=[studentWithErrors, student_list])
         dpg.add_separator()
         with dpg.group(horizontal_spacing=2, width=-1):
             dpg.add_listbox(students, num_items=25, tag="student_view", callback=gui.select_student, user_data=[studentWithErrors, categoryList, student_list])
@@ -93,11 +82,11 @@ def main() -> None:
                             for error in category.errors:
                                 with dpg.table_row():
                                     dpg.add_text(error.text, tag=error.text)
-                                    dpg.add_input_int(min_value=-1, min_clamped=True, default_value=0, width=80, tag=error._id, callback=gui.mistakeSelected,  user_data=[studentWithErrors, student_list, categoryList])
+                                    dpg.add_input_int(min_value=-1, min_clamped=True, default_value=0, width=80, tag=error._id, callback=gui.mistakeSelected,  user_data=[studentWithErrors, student_list, categoryList, category_dict])
                       
     ######## COMMENT VIEW ########
     with dpg.window(label="Feedback", tag=button_window) as bWindow:
-        dpg.add_input_text(multiline=True, height=-1, label="", width=-1, tag="feedback_input", callback=gui.updateText, user_data=CATEGORY_TEXTS)
+        dpg.add_input_text(multiline=True, height=-1, label="", width=-1, tag="feedback_input", callback=gui.updateText, user_data="")
         
     ######## STUDENT DATA VIEW ########
     with dpg.window(label="Arviointitaulukko", tag=data_window) as dWindow:
@@ -125,14 +114,14 @@ def main() -> None:
             #dpg.add_menu_item(label="Choose folder", callback=gui.askFileTest, user_data=student_list)
 
 
-
+    
 
     ######## ITEM REGISTRIES ########
     with dpg.item_handler_registry(tag="student handler") as handler:
-        dpg.add_item_clicked_handler(callback=gui.select_student, user_data=[studentWithErrors, categoryList, student_list, CATEGORY_TEXTS])
+        dpg.add_item_clicked_handler(callback=gui.select_student, user_data=[studentWithErrors, categoryList, student_list])
     
     with dpg.item_handler_registry(tag="mistake handler") as mHandler:
-        dpg.add_item_clicked_handler(callback=gui.mistakeSelected, user_data=[studentWithErrors, student_list, categoryList])        
+        dpg.add_item_clicked_handler(callback=gui.mistakeSelected, user_data=[studentWithErrors, student_list, categoryList, category_dict])        
         
 
     dpg.bind_item_handler_registry("student_view", "student handler")
@@ -148,6 +137,12 @@ def main() -> None:
     #dpg.show_style_editor()
     dpg.setup_dearpygui()
     dpg.set_viewport_pos([0,0])
+    
+    current_student_name = dpg.get_value("student_view")
+    current_student = gui.findStudent(current_student_name, student_list)
+    gui.updateDataWindow(current_student)
+    gui.calculateErrorPoints(current_student, studentWithErrors.get(current_student_name, {}).get('error', {}), category_dict)
+    
     dpg.show_viewport()        
     dpg.start_dearpygui()    
     # while dpg.is_dearpygui_running():
@@ -161,4 +156,5 @@ if __name__ == "__main__":
 
 
 
+    
     

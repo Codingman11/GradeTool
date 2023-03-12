@@ -1,5 +1,5 @@
-from dataclasses import dataclass, field, fields
-from typing import Any, Union
+from dataclasses import dataclass, field
+
 @dataclass
 class StudentInfo:
     name: str
@@ -7,8 +7,8 @@ class StudentInfo:
     group: str
     feedback: list = field(default_factory=list) 
     grade: int = field(default_factory=int)
-    errorpoints: int = field(default=0)
-    errorlist: dict = field(default_factory=dict)
+    errorpoints: float = field(default=0)
+    moodle_comment: list = field(default_factory=list)
     def __str__(self) -> str:
         return(f"Student name: {self.name}, group: {self.group}")
 
