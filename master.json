@@ -1,13 +1,166 @@
 {
-<<<<<<< Updated upstream
-    "Nykänen Venla": {
-        "TO0100": 2
+    "Kimari Aapo": {
+        "error": {
+            "AK0301": {
+                "amount": 1,
+                "value": 0.7,
+                "category": "Alkukommentit"
+            },
+            "AK0302": {
+                "amount": 1,
+                "value": 0.7,
+                "category": "Alkukommentit"
+            },
+            "AK0303": {
+                "amount": 1,
+                "value": 0.7,
+                "category": "Alkukommentit"
+            },
+            "TK0702": {
+                "amount": 1,
+                "value": 2,
+                "category": "Tiedostonkäsittely"
+            },
+            "TK0703": {
+                "amount": 1,
+                "value": 2,
+                "category": "Tiedostonkäsittely"
+            },
+            "TK0704": {
+                "amount": 1,
+                "value": 2,
+                "category": "Tiedostonkäsittely"
+            },
+            "TK0705": {
+                "amount": 1,
+                "value": 2,
+                "category": "Tiedostonkäsittely"
+            }
+        },
+        "grade": 0,
+        "student_number": "",
+        "errorpoints": 10.1
     },
-    "Ojanen Markus": {
-        "TO0101": 2
+    "Kuusinen Venla": {
+        "error": {
+            "TK0702": {
+                "amount": 1,
+                "value": 2,
+                "category": "Tiedostonkäsittely"
+            },
+            "TK0703": {
+                "amount": 1,
+                "value": 2,
+                "category": "Tiedostonkäsittely"
+            },
+            "TK0704": {
+                "amount": 1,
+                "value": 2,
+                "category": "Tiedostonkäsittely"
+            },
+            "TK0701": {
+                "amount": 1,
+                "value": 2,
+                "category": "Tiedostonkäsittely"
+            },
+            "AT1003": {
+                "amount": 1,
+                "value": 0.7,
+                "category": "Analyysin toteutus"
+            },
+            "AT1004": {
+                "amount": 1,
+                "value": 0.7,
+                "category": "Analyysin toteutus"
+            },
+            "AT1006": {
+                "amount": 1,
+                "value": 0.7,
+                "category": "Analyysin toteutus"
+            }
+        },
+        "grade": 0,
+        "student_number": "",
+        "errorpoints": 10.1
+    },
+    "Kinnunen Iita": {
+        "grade": 1,
+        "errorpoints": 0,
+        "student_number": ""
+    },
+    "Korkalainen Pietari": {
+        "grade": 1,
+        "errorpoints": 0,
+        "student_number": ""
+    },
+    "Kuutniemi Joona": {
+        "grade": 1,
+        "errorpoints": 0,
+        "student_number": ""
+    },
+    "Kärnä Onni": {
+        "grade": 1,
+        "errorpoints": 0,
+        "student_number": ""
+    },
+    "Lattu Rasmus": {
+        "grade": 1,
+        "errorpoints": 0,
+        "student_number": ""
+    },
+    "Laurila Veeti": {
+        "grade": 1,
+        "errorpoints": 0,
+        "student_number": ""
+    },
+    "Laurén Niko": {
+        "grade": 1,
+        "errorpoints": 0,
+        "student_number": ""
+    },
+    "Lehtosaari Maija": {
+        "grade": 1,
+        "errorpoints": 0,
+        "student_number": ""
+    },
+    "Leppämäki Juuli": {
+        "grade": 1,
+        "errorpoints": 0,
+        "student_number": ""
+    },
+    "Liljeström Anna": {
+        "grade": 1,
+        "errorpoints": 0,
+        "student_number": ""
+    },
+    "Liukkonen Sami": {
+        "grade": 1,
+        "errorpoints": 0,
+        "student_number": ""
+    },
+    "Martikainen Heikki": {
+        "grade": 1,
+        "errorpoints": 0,
+        "student_number": ""
+    },
+    "Miettinen Samuli": {
+        "grade": 1,
+        "errorpoints": 0,
+        "student_number": ""
+    },
+    "Murtomaa Oskari": {
+        "grade": 1,
+        "errorpoints": 0,
+        "student_number": ""
+    },
+    "Mustakallio Kalle": {
+        "grade": 1,
+        "errorpoints": 0,
+        "student_number": ""
+    },
+    "Mänttäri Juho": {
+        "grade": 1,
+        "errorpoints": 0,
+        "student_number": ""
     }
-=======
-    "TO0101": {},
-    "Nikkinen Juho": {}
->>>>>>> Stashed changes
 }

@@ -1,0 +1,270 @@
+--opiskelija--, Kimari Aapo, , 0:
+Harjoitustyön minimitaso palautus 1 on Korjattava.
+Toiminnallisuus tehtäväksiannon mukaan ja CodeGradesta läpi: OK
+Tiedostorakenne useita tiedostoja (ei arvioida minimitasolla): OK
+Tyyliohjeen mukaiset alkukommentit: EiOk
+Ohjelmarakenne pääohjelma ja aliohjelmat: OK
+Perusoperaatiot tulostus, syöte, valintarakenne, toistorakenne: OK
+Tiedonvälitys parametrit ja paluuarvot, ei globaaleja muuttujia: OK
+Tiedostonkäsittely luku ja kirjoittaminen: EiOk
+Tietorakenteet tietue/struct, linkitetty lista: OK
+Dynaaminen muistinhallinta: malloc, free, NULL: OK
+Virheenkäsittely muistin- ja tiedostonkäsittelyssä: OK
+Analyysien toteutus: OK
+Makefile palautettu ja make tuottaa toimivan ohjelman (ei arvioida minimitasolla): OK
+
+--opiskelija--, Kinnunen Iita, , 1:
+Harjoitustyön minimitaso palautus 1 on Hyväksytty.
+Toiminnallisuus tehtäväksiannon mukaan ja CodeGradesta läpi: Ok
+Tiedostorakenne useita tiedostoja (ei arvioida minimitasolla): Ok
+Tyyliohjeen mukaiset alkukommentit: Ok
+Ohjelmarakenne pääohjelma ja aliohjelmat: Ok
+Perusoperaatiot tulostus, syöte, valintarakenne, toistorakenne: Ok
+Tiedonvälitys parametrit ja paluuarvot, ei globaaleja muuttujia: Ok
+Tiedostonkäsittely luku ja kirjoittaminen: Ok
+Tietorakenteet tietue/struct, linkitetty lista: Ok
+Dynaaminen muistinhallinta: malloc, free, NULL: Ok
+Virheenkäsittely muistin- ja tiedostonkäsittelyssä: Ok
+Analyysien toteutus: Ok
+Makefile palautettu ja make tuottaa toimivan ohjelman (ei arvioida minimitasolla): Ok
+
+--opiskelija--, Korkalainen Pietari, , 1:
+Harjoitustyön minimitaso palautus 1 on Hyväksytty.
+Toiminnallisuus tehtäväksiannon mukaan ja CodeGradesta läpi: Ok
+Tiedostorakenne useita tiedostoja (ei arvioida minimitasolla): Ok
+Tyyliohjeen mukaiset alkukommentit: Ok
+Ohjelmarakenne pääohjelma ja aliohjelmat: Ok
+Perusoperaatiot tulostus, syöte, valintarakenne, toistorakenne: Ok
+Tiedonvälitys parametrit ja paluuarvot, ei globaaleja muuttujia: Ok
+Tiedostonkäsittely luku ja kirjoittaminen: Ok
+Tietorakenteet tietue/struct, linkitetty lista: Ok
+Dynaaminen muistinhallinta: malloc, free, NULL: Ok
+Virheenkäsittely muistin- ja tiedostonkäsittelyssä: Ok
+Analyysien toteutus: Ok
+Makefile palautettu ja make tuottaa toimivan ohjelman (ei arvioida minimitasolla): Ok
+
+--opiskelija--, Kuusinen Venla, , 0:
+Harjoitustyön minimitaso palautus 1 on Korjattava.
+Toiminnallisuus tehtäväksiannon mukaan ja CodeGradesta läpi: OK
+Tiedostorakenne useita tiedostoja (ei arvioida minimitasolla): OK
+Tyyliohjeen mukaiset alkukommentit: OK
+Ohjelmarakenne pääohjelma ja aliohjelmat: OK
+Perusoperaatiot tulostus, syöte, valintarakenne, toistorakenne: OK
+Tiedonvälitys parametrit ja paluuarvot, ei globaaleja muuttujia: OK
+Tiedostonkäsittely luku ja kirjoittaminen: EiOk
+Tietorakenteet tietue/struct, linkitetty lista: OK
+Dynaaminen muistinhallinta: malloc, free, NULL: OK
+Virheenkäsittely muistin- ja tiedostonkäsittelyssä: OK
+Analyysien toteutus: EiOk
+Makefile palautettu ja make tuottaa toimivan ohjelman (ei arvioida minimitasolla): OK
+
+--opiskelija--, Kuutniemi Joona, , 1:
+Harjoitustyön minimitaso palautus 1 on Hyväksytty.
+Toiminnallisuus tehtäväksiannon mukaan ja CodeGradesta läpi: Ok
+Tiedostorakenne useita tiedostoja (ei arvioida minimitasolla): Ok
+Tyyliohjeen mukaiset alkukommentit: Ok
+Ohjelmarakenne pääohjelma ja aliohjelmat: Ok
+Perusoperaatiot tulostus, syöte, valintarakenne, toistorakenne: Ok
+Tiedonvälitys parametrit ja paluuarvot, ei globaaleja muuttujia: Ok
+Tiedostonkäsittely luku ja kirjoittaminen: Ok
+Tietorakenteet tietue/struct, linkitetty lista: Ok
+Dynaaminen muistinhallinta: malloc, free, NULL: Ok
+Virheenkäsittely muistin- ja tiedostonkäsittelyssä: Ok
+Analyysien toteutus: Ok
+Makefile palautettu ja make tuottaa toimivan ohjelman (ei arvioida minimitasolla): Ok
+
+--opiskelija--, Kärnä Onni, , 1:
+Harjoitustyön minimitaso palautus 1 on Hyväksytty.
+Toiminnallisuus tehtäväksiannon mukaan ja CodeGradesta läpi: Ok
+Tiedostorakenne useita tiedostoja (ei arvioida minimitasolla): Ok
+Tyyliohjeen mukaiset alkukommentit: Ok
+Ohjelmarakenne pääohjelma ja aliohjelmat: Ok
+Perusoperaatiot tulostus, syöte, valintarakenne, toistorakenne: Ok
+Tiedonvälitys parametrit ja paluuarvot, ei globaaleja muuttujia: Ok
+Tiedostonkäsittely luku ja kirjoittaminen: Ok
+Tietorakenteet tietue/struct, linkitetty lista: Ok
+Dynaaminen muistinhallinta: malloc, free, NULL: Ok
+Virheenkäsittely muistin- ja tiedostonkäsittelyssä: Ok
+Analyysien toteutus: Ok
+Makefile palautettu ja make tuottaa toimivan ohjelman (ei arvioida minimitasolla): Ok
+
+--opiskelija--, Lattu Rasmus, , 1:
+Harjoitustyön minimitaso palautus 1 on Hyväksytty.
+Toiminnallisuus tehtäväksiannon mukaan ja CodeGradesta läpi: Ok
+Tiedostorakenne useita tiedostoja (ei arvioida minimitasolla): Ok
+Tyyliohjeen mukaiset alkukommentit: Ok
+Ohjelmarakenne pääohjelma ja aliohjelmat: Ok
+Perusoperaatiot tulostus, syöte, valintarakenne, toistorakenne: Ok
+Tiedonvälitys parametrit ja paluuarvot, ei globaaleja muuttujia: Ok
+Tiedostonkäsittely luku ja kirjoittaminen: Ok
+Tietorakenteet tietue/struct, linkitetty lista: Ok
+Dynaaminen muistinhallinta: malloc, free, NULL: Ok
+Virheenkäsittely muistin- ja tiedostonkäsittelyssä: Ok
+Analyysien toteutus: Ok
+Makefile palautettu ja make tuottaa toimivan ohjelman (ei arvioida minimitasolla): Ok
+
+--opiskelija--, Laurila Veeti, , 1:
+Harjoitustyön minimitaso palautus 1 on Hyväksytty.
+Toiminnallisuus tehtäväksiannon mukaan ja CodeGradesta läpi: Ok
+Tiedostorakenne useita tiedostoja (ei arvioida minimitasolla): Ok
+Tyyliohjeen mukaiset alkukommentit: Ok
+Ohjelmarakenne pääohjelma ja aliohjelmat: Ok
+Perusoperaatiot tulostus, syöte, valintarakenne, toistorakenne: Ok
+Tiedonvälitys parametrit ja paluuarvot, ei globaaleja muuttujia: Ok
+Tiedostonkäsittely luku ja kirjoittaminen: Ok
+Tietorakenteet tietue/struct, linkitetty lista: Ok
+Dynaaminen muistinhallinta: malloc, free, NULL: Ok
+Virheenkäsittely muistin- ja tiedostonkäsittelyssä: Ok
+Analyysien toteutus: Ok
+Makefile palautettu ja make tuottaa toimivan ohjelman (ei arvioida minimitasolla): Ok
+
+--opiskelija--, Laurén Niko, , 1:
+Harjoitustyön minimitaso palautus 1 on Hyväksytty.
+Toiminnallisuus tehtäväksiannon mukaan ja CodeGradesta läpi: Ok
+Tiedostorakenne useita tiedostoja (ei arvioida minimitasolla): Ok
+Tyyliohjeen mukaiset alkukommentit: Ok
+Ohjelmarakenne pääohjelma ja aliohjelmat: Ok
+Perusoperaatiot tulostus, syöte, valintarakenne, toistorakenne: Ok
+Tiedonvälitys parametrit ja paluuarvot, ei globaaleja muuttujia: Ok
+Tiedostonkäsittely luku ja kirjoittaminen: Ok
+Tietorakenteet tietue/struct, linkitetty lista: Ok
+Dynaaminen muistinhallinta: malloc, free, NULL: Ok
+Virheenkäsittely muistin- ja tiedostonkäsittelyssä: Ok
+Analyysien toteutus: Ok
+Makefile palautettu ja make tuottaa toimivan ohjelman (ei arvioida minimitasolla): Ok
+
+--opiskelija--, Lehtosaari Maija, , 1:
+Harjoitustyön minimitaso palautus 1 on Hyväksytty.
+Toiminnallisuus tehtäväksiannon mukaan ja CodeGradesta läpi: Ok
+Tiedostorakenne useita tiedostoja (ei arvioida minimitasolla): Ok
+Tyyliohjeen mukaiset alkukommentit: Ok
+Ohjelmarakenne pääohjelma ja aliohjelmat: Ok
+Perusoperaatiot tulostus, syöte, valintarakenne, toistorakenne: Ok
+Tiedonvälitys parametrit ja paluuarvot, ei globaaleja muuttujia: Ok
+Tiedostonkäsittely luku ja kirjoittaminen: Ok
+Tietorakenteet tietue/struct, linkitetty lista: Ok
+Dynaaminen muistinhallinta: malloc, free, NULL: Ok
+Virheenkäsittely muistin- ja tiedostonkäsittelyssä: Ok
+Analyysien toteutus: Ok
+Makefile palautettu ja make tuottaa toimivan ohjelman (ei arvioida minimitasolla): Ok
+
+--opiskelija--, Leppämäki Juuli, , 1:
+Harjoitustyön minimitaso palautus 1 on Hyväksytty.
+Toiminnallisuus tehtäväksiannon mukaan ja CodeGradesta läpi: Ok
+Tiedostorakenne useita tiedostoja (ei arvioida minimitasolla): Ok
+Tyyliohjeen mukaiset alkukommentit: Ok
+Ohjelmarakenne pääohjelma ja aliohjelmat: Ok
+Perusoperaatiot tulostus, syöte, valintarakenne, toistorakenne: Ok
+Tiedonvälitys parametrit ja paluuarvot, ei globaaleja muuttujia: Ok
+Tiedostonkäsittely luku ja kirjoittaminen: Ok
+Tietorakenteet tietue/struct, linkitetty lista: Ok
+Dynaaminen muistinhallinta: malloc, free, NULL: Ok
+Virheenkäsittely muistin- ja tiedostonkäsittelyssä: Ok
+Analyysien toteutus: Ok
+Makefile palautettu ja make tuottaa toimivan ohjelman (ei arvioida minimitasolla): Ok
+
+--opiskelija--, Liljeström Anna, , 1:
+Harjoitustyön minimitaso palautus 1 on Hyväksytty.
+Toiminnallisuus tehtäväksiannon mukaan ja CodeGradesta läpi: Ok
+Tiedostorakenne useita tiedostoja (ei arvioida minimitasolla): Ok
+Tyyliohjeen mukaiset alkukommentit: Ok
+Ohjelmarakenne pääohjelma ja aliohjelmat: Ok
+Perusoperaatiot tulostus, syöte, valintarakenne, toistorakenne: Ok
+Tiedonvälitys parametrit ja paluuarvot, ei globaaleja muuttujia: Ok
+Tiedostonkäsittely luku ja kirjoittaminen: Ok
+Tietorakenteet tietue/struct, linkitetty lista: Ok
+Dynaaminen muistinhallinta: malloc, free, NULL: Ok
+Virheenkäsittely muistin- ja tiedostonkäsittelyssä: Ok
+Analyysien toteutus: Ok
+Makefile palautettu ja make tuottaa toimivan ohjelman (ei arvioida minimitasolla): Ok
+
+--opiskelija--, Liukkonen Sami, , 1:
+Harjoitustyön minimitaso palautus 1 on Hyväksytty.
+Toiminnallisuus tehtäväksiannon mukaan ja CodeGradesta läpi: Ok
+Tiedostorakenne useita tiedostoja (ei arvioida minimitasolla): Ok
+Tyyliohjeen mukaiset alkukommentit: Ok
+Ohjelmarakenne pääohjelma ja aliohjelmat: Ok
+Perusoperaatiot tulostus, syöte, valintarakenne, toistorakenne: Ok
+Tiedonvälitys parametrit ja paluuarvot, ei globaaleja muuttujia: Ok
+Tiedostonkäsittely luku ja kirjoittaminen: Ok
+Tietorakenteet tietue/struct, linkitetty lista: Ok
+Dynaaminen muistinhallinta: malloc, free, NULL: Ok
+Virheenkäsittely muistin- ja tiedostonkäsittelyssä: Ok
+Analyysien toteutus: Ok
+Makefile palautettu ja make tuottaa toimivan ohjelman (ei arvioida minimitasolla): Ok
+
+--opiskelija--, Martikainen Heikki, , 1:
+Harjoitustyön minimitaso palautus 1 on Hyväksytty.
+Toiminnallisuus tehtäväksiannon mukaan ja CodeGradesta läpi: Ok
+Tiedostorakenne useita tiedostoja (ei arvioida minimitasolla): Ok
+Tyyliohjeen mukaiset alkukommentit: Ok
+Ohjelmarakenne pääohjelma ja aliohjelmat: Ok
+Perusoperaatiot tulostus, syöte, valintarakenne, toistorakenne: Ok
+Tiedonvälitys parametrit ja paluuarvot, ei globaaleja muuttujia: Ok
+Tiedostonkäsittely luku ja kirjoittaminen: Ok
+Tietorakenteet tietue/struct, linkitetty lista: Ok
+Dynaaminen muistinhallinta: malloc, free, NULL: Ok
+Virheenkäsittely muistin- ja tiedostonkäsittelyssä: Ok
+Analyysien toteutus: Ok
+Makefile palautettu ja make tuottaa toimivan ohjelman (ei arvioida minimitasolla): Ok
+
+--opiskelija--, Miettinen Samuli, , 1:
+Harjoitustyön minimitaso palautus 1 on Hyväksytty.
+Toiminnallisuus tehtäväksiannon mukaan ja CodeGradesta läpi: Ok
+Tiedostorakenne useita tiedostoja (ei arvioida minimitasolla): Ok
+Tyyliohjeen mukaiset alkukommentit: Ok
+Ohjelmarakenne pääohjelma ja aliohjelmat: Ok
+Perusoperaatiot tulostus, syöte, valintarakenne, toistorakenne: Ok
+Tiedonvälitys parametrit ja paluuarvot, ei globaaleja muuttujia: Ok
+Tiedostonkäsittely luku ja kirjoittaminen: Ok
+Tietorakenteet tietue/struct, linkitetty lista: Ok
+Dynaaminen muistinhallinta: malloc, free, NULL: Ok
+Virheenkäsittely muistin- ja tiedostonkäsittelyssä: Ok
+Analyysien toteutus: Ok
+Makefile palautettu ja make tuottaa toimivan ohjelman (ei arvioida minimitasolla): Ok
+
+--opiskelija--, Murtomaa Oskari, , 1:
+Harjoitustyön minimitaso palautus 1 on Hyväksytty.
+Toiminnallisuus tehtäväksiannon mukaan ja CodeGradesta läpi: Ok
+Tiedostorakenne useita tiedostoja (ei arvioida minimitasolla): Ok
+Tyyliohjeen mukaiset alkukommentit: Ok
+Ohjelmarakenne pääohjelma ja aliohjelmat: Ok
+Perusoperaatiot tulostus, syöte, valintarakenne, toistorakenne: Ok
+Tiedonvälitys parametrit ja paluuarvot, ei globaaleja muuttujia: Ok
+Tiedostonkäsittely luku ja kirjoittaminen: Ok
+Tietorakenteet tietue/struct, linkitetty lista: Ok
+Dynaaminen muistinhallinta: malloc, free, NULL: Ok
+Virheenkäsittely muistin- ja tiedostonkäsittelyssä: Ok
+Analyysien toteutus: Ok
+Makefile palautettu ja make tuottaa toimivan ohjelman (ei arvioida minimitasolla): Ok
+
+--opiskelija--, Mustakallio Kalle, , 1:
+Harjoitustyön minimitaso palautus 1 on Hyväksytty.
+Toiminnallisuus tehtäväksiannon mukaan ja CodeGradesta läpi: Ok
+Tiedostorakenne useita tiedostoja (ei arvioida minimitasolla): Ok
+Tyyliohjeen mukaiset alkukommentit: Ok
+Ohjelmarakenne pääohjelma ja aliohjelmat: Ok
+Perusoperaatiot tulostus, syöte, valintarakenne, toistorakenne: Ok
+Tiedonvälitys parametrit ja paluuarvot, ei globaaleja muuttujia: Ok
+Tiedostonkäsittely luku ja kirjoittaminen: Ok
+Tietorakenteet tietue/struct, linkitetty lista: Ok
+Dynaaminen muistinhallinta: malloc, free, NULL: Ok
+Virheenkäsittely muistin- ja tiedostonkäsittelyssä: Ok
+Analyysien toteutus: Ok
+Makefile palautettu ja make tuottaa toimivan ohjelman (ei arvioida minimitasolla): Ok
+
+--opiskelija--, Mänttäri Juho, , 1:
+Harjoitustyön minimitaso palautus 1 on Hyväksytty.
+Toiminnallisuus tehtäväksiannon mukaan ja CodeGradesta läpi: Ok
+Tiedostorakenne useita tiedostoja (ei arvioida minimitasolla): Ok
+Tyyliohjeen mukaiset alkukommentit: Ok
+Ohjelmarakenne pääohjelma ja aliohjelmat: Ok
+Perusoperaatiot tulostus, syöte, valintarakenne, toistorakenne: Ok
+Tiedonvälitys parametrit ja paluuarvot, ei globaaleja muuttujia: Ok
+Tiedostonkäsittely luku ja kirjoittaminen: Ok
+Tietorakenteet tietue/struct, linkitetty lista: Ok
+Dynaaminen muistinhallinta: malloc, free, NULL: Ok
+Virheenkäsittely muistin- ja tiedostonkäsittelyssä: Ok
+Analyysien toteutus: Ok
+Makefile palautettu ja make tuottaa toimivan ohjelman (ei arvioida minimitasolla): Ok
+

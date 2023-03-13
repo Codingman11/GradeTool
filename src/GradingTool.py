@@ -1,4 +1,4 @@
-__version__ = "0.1.3"
+__version__ = "0.2.0"
 __author__ = "JP"
 
 import dearpygui.dearpygui as dpg
@@ -12,8 +12,12 @@ from tkinter import filedialog
 #   V0.1.2 Mistakes from problem_list.json added to error window and a functionality between students and selecting mistake 
 #   V0.1.3 Data Window added and Feedback window added.
 #   V0.1.4 Feedback window added and student's feedback based on mistakes are added. 
+#   V0.2.0 The gradetool is working expect a few bugs
 MAX_GRADE = {"minimi": 1, "perus": 3, "tavoite": 5}
 
+#You can edit this based on your screen size
+DEFAULT_WIDTH = 1080
+FONT_SCALE = 1.5
 #DEFAULT_FONT, NORMAL_FONT, TITLE_FONT = gui.initialize_font()
 def askFile(student_list): 
     student_list.clear()
@@ -39,7 +43,7 @@ def main() -> None:
     #print(category)
     studentWithErrors = gui.readGradedFile()
     
-    student_list = gui.add_files_in_folder(dirname, studentWithErrors)
+    student_list = gui.add_files_in_folder(dirname, studentWithErrors, category_dict, categoryList)
     students = tuple(student.name for student in student_list)
     
     dpg.create_context()
@@ -56,7 +60,7 @@ def main() -> None:
     
     ######## STUDENT VIEW ########
     with dpg.window(label="Opiskelijat", tag=student_window):
-        dpg.add_button(label="SAVE", width=-1, callback=gui.writeToJsonFile, user_data=[studentWithErrors, student_list])
+        dpg.add_button(label="KIRJOITA TIEDOSTOIHIN", width=-1, callback=gui.writeToJsonFile, user_data=[studentWithErrors, student_list])
         dpg.add_separator()
         with dpg.group(horizontal_spacing=2, width=-1):
             dpg.add_listbox(students, num_items=25, tag="student_view", callback=gui.select_student, user_data=[studentWithErrors, categoryList, student_list])
@@ -82,11 +86,11 @@ def main() -> None:
                             for error in category.errors:
                                 with dpg.table_row():
                                     dpg.add_text(error.text, tag=error.text)
-                                    dpg.add_input_int(min_value=-1, min_clamped=True, default_value=0, width=80, tag=error._id, callback=gui.mistakeSelected,  user_data=[studentWithErrors, student_list, categoryList, category_dict])
+                                    dpg.add_input_int(min_value=-1, min_clamped=True, default_value=0, width=80*FONT_SCALE, tag=error._id, callback=gui.mistakeSelected,  user_data=[studentWithErrors, student_list, categoryList, category_dict])
                       
     ######## COMMENT VIEW ########
     with dpg.window(label="Feedback", tag=button_window) as bWindow:
-        dpg.add_input_text(multiline=True, height=-1, label="", width=-1, tag="feedback_input", callback=gui.updateText, user_data="")
+        dpg.add_input_text(multiline=True, height=-1, label="", width=-1, tag="feedback_input", callback=gui.updateText, user_data=[student_list, studentWithErrors])
         
     ######## STUDENT DATA VIEW ########
     with dpg.window(label="Arviointitaulukko", tag=data_window) as dWindow:
@@ -100,6 +104,9 @@ def main() -> None:
             dpg.add_text(MAX_GRADE[student_list[0].group], tag="student_grade")
             dpg.add_text("Virhepisteet: ")
             dpg.add_text("0", tag="error_points")
+        with dpg.group(horizontal=True):
+            dpg.add_text("Opiskelijanumero: ")
+            dpg.add_input_text(tag="student_number", width=-1, callback=gui.get_student_number, user_data=[studentWithErrors, student_list])
         
         
            
@@ -138,11 +145,15 @@ def main() -> None:
     dpg.setup_dearpygui()
     dpg.set_viewport_pos([0,0])
     
-    current_student_name = dpg.get_value("student_view")
-    current_student = gui.findStudent(current_student_name, student_list)
-    gui.updateDataWindow(current_student)
-    gui.calculateErrorPoints(current_student, studentWithErrors.get(current_student_name, {}).get('error', {}), category_dict)
+    if len(studentWithErrors) != 0:
+        current_student_name = dpg.get_value("student_view")
+        current_student = gui.findStudent(current_student_name, student_list)
+        gui.updateDataWindow(current_student)
+        gui.calculateErrorPoints(current_student, studentWithErrors.get(current_student_name, {}).get('error', {}), category_dict)
+        gui.updateTable(categoryList, studentWithErrors, current_student.name)
     
+    dpg.set_global_font_scale(FONT_SCALE)
+    dpg.set_viewport_width(DEFAULT_WIDTH * 2)
     dpg.show_viewport()        
     dpg.start_dearpygui()    
     # while dpg.is_dearpygui_running():
@@ -152,6 +163,7 @@ def main() -> None:
     dpg.destroy_context()
 
 if __name__ == "__main__":
+    
     main()
 
 
