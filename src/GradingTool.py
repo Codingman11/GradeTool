@@ -4,6 +4,7 @@ __author__ = "JP"
 import dearpygui.dearpygui as dpg
 import GradingToolGUI as gui
 import tkinter as tk
+from pathlib import Path
 from tkinter import filedialog
 
 
@@ -13,20 +14,19 @@ from tkinter import filedialog
 #   V0.1.3 Data Window added and Feedback window added.
 #   V0.1.4 Feedback window added and student's feedback based on mistakes are added. 
 #   V0.2.0 The gradetool is working expect a few bugs
+#   V0.2.1 Each category's first problem didnt show up in the program --> FIXED
 MAX_GRADE = {"minimi": 1, "perus": 3, "tavoite": 5}
 
 #You can edit this based on your screen size
-DEFAULT_WIDTH = 1080
-FONT_SCALE = 1.5
+DEFAULT_WIDTH = 900
+FONT_SCALE = 1
 #DEFAULT_FONT, NORMAL_FONT, TITLE_FONT = gui.initialize_font()
-def askFile(student_list): 
-    student_list.clear()
-    root = tk.Tk()
-    root.withdraw()
-    dirname = filedialog.askdirectory()
-    student_list = gui.add_files_in_folder(dirname)
+DEFAULT_FONT = Path(__file__).parents[1] / "assets/Dosis-Medium.ttf"
+HL_FONT = Path(__file__).parents[1] / "assets/arialnb.ttf"
 
 
+
+   
 
 
 def main() -> None:
@@ -35,13 +35,13 @@ def main() -> None:
     root = tk.Tk()
     root.withdraw()
     dirname = filedialog.askdirectory()
-    #default_font, hl_font, title_font = gui.initialize_font()
    
+    group = str(dirname).split("/")[-1]
     ######## INITIALIZING DATA AND DPG ########
     categoryList, category_dict = gui.read_problem_json("Problem_list_C.json")
     # gui.read_json_file()
     #print(category)
-    studentWithErrors = gui.readGradedFile()
+    studentWithErrors = gui.readGradedFile(group)
     
     student_list = gui.add_files_in_folder(dirname, studentWithErrors, category_dict, categoryList)
     students = tuple(student.name for student in student_list)
@@ -50,17 +50,21 @@ def main() -> None:
     dpg.configure_app(
         docking=True, docking_space=True, init_file="custom_layout.ini"
     )
-    dpg.create_viewport(title="GradeTool", width=1080)
+    dpg.create_viewport(title="GradeTool")
     
     student_window = dpg.generate_uuid()
     category_window = dpg.generate_uuid()
     button_window = dpg.generate_uuid()
     data_window = dpg.generate_uuid()
 
+    with dpg.font_registry():
+        default_font = dpg.add_font(DEFAULT_FONT, 25)
+        hl_font = dpg.add_font(HL_FONT, 17)
+        title_font = dpg.add_font(HL_FONT, 22)
     
     ######## STUDENT VIEW ########
     with dpg.window(label="Opiskelijat", tag=student_window):
-        dpg.add_button(label="KIRJOITA TIEDOSTOIHIN", width=-1, callback=gui.writeToJsonFile, user_data=[studentWithErrors, student_list])
+        dpg.add_button(label="KIRJOITA TIEDOSTOIHIN", width=-1, callback=gui.writeToJsonFile, user_data=[studentWithErrors, student_list, group])
         dpg.add_separator()
         with dpg.group(horizontal_spacing=2, width=-1):
             dpg.add_listbox(students, num_items=25, tag="student_view", callback=gui.select_student, user_data=[studentWithErrors, categoryList, student_list])
@@ -86,18 +90,18 @@ def main() -> None:
                             for error in category.errors:
                                 with dpg.table_row():
                                     dpg.add_text(error.text, tag=error.text)
-                                    dpg.add_input_int(min_value=-1, min_clamped=True, default_value=0, width=80*FONT_SCALE, tag=error._id, callback=gui.mistakeSelected,  user_data=[studentWithErrors, student_list, categoryList, category_dict])
+                                    dpg.add_input_int(min_value=-1, min_clamped=True, default_value=0, width=-1,tag=error._id, callback=gui.mistakeSelected,  user_data=[studentWithErrors, student_list, categoryList, category_dict])
                       
     ######## COMMENT VIEW ########
     with dpg.window(label="Feedback", tag=button_window) as bWindow:
-        dpg.add_input_text(multiline=True, height=-1, label="", width=-1, tag="feedback_input", callback=gui.updateText, user_data=[student_list, studentWithErrors])
+        dpg.add_input_text(multiline=True, height=-1, label="", width=-1 ,tag="feedback_input", callback=gui.updateText, user_data=[student_list, studentWithErrors])
         
     ######## STUDENT DATA VIEW ########
     with dpg.window(label="Arviointitaulukko", tag=data_window) as dWindow:
         # with dpg.group(horizontal=True):
         #     dpg.add_text("Opiskelijanumero: ")
         #     dpg.add_input_text(tag="student_number", width=200)
-        with dpg.group(horizontal=True):
+        with dpg.group(horizontal=True, horizontal_spacing=10):
             dpg.add_text("Taso: ", indent=0.1)
             dpg.add_text(student_list[0].group, tag="level")
             dpg.add_text("Arvosana: ")
@@ -133,9 +137,10 @@ def main() -> None:
 
     dpg.bind_item_handler_registry("student_view", "student handler")
     dpg.bind_item_handler_registry("error_view", "error handler")
-  
+    
     # dpg.bind_item_handler_registry("category_tree", "tree handler")
 
+    dpg.bind_font(default_font)
 
     
     

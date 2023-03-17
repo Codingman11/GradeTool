@@ -1,7 +1,6 @@
 from dataclasses import dataclass, field
 
 
-
 @dataclass
 class ErrorInfo:
     _id: str = ""
@@ -21,7 +20,7 @@ class StudentInfo:
     name: str = ""
     student_number: str = field(default_factory=str)
     group: str = field(default_factory=str)
-    error_list: list[ErrorInfo] = field(default_factory=list)
+    error_list: dict = field(default_factory=dict)
     grade: int = field(default_factory=int)
     errorpoints: float = field(default=0)
     moodle_comment: list = field(default_factory=list)
@@ -36,12 +35,6 @@ class Category:
     name: str = ""
     category_sum: int = field(default=0)
     errors: list[ErrorInfo] = field(default_factory=list)
-    
-    # def __post_init__(self):
-    #     data = []
-    #     for error in self.errors:
-    #         data.append(ErrorInfo(**error))
-    #     self.errors = data
     
     def __str__(self) -> str:
         return f"{self.errors}"
