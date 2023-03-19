@@ -2,10 +2,10 @@ __version__ = "0.2.0"
 __author__ = "JP"
 
 import dearpygui.dearpygui as dpg
-import GradingToolGUI as gui
 import tkinter as tk
 from pathlib import Path
 from tkinter import filedialog
+import GradingToolGUI as gui
 
 
 #   V0.1.0 GUI windows added, data structure for student, errors and category added
@@ -31,6 +31,7 @@ HL_FONT = Path(__file__).parents[1] / "assets/arialnb.ttf"
 
 def main() -> None:
 
+    
     ######## ASKING DIRECTORY NAME ########
     root = tk.Tk()
     root.withdraw()
@@ -152,11 +153,12 @@ def main() -> None:
     
     if len(studentWithErrors) != 0:
         current_student_name = dpg.get_value("student_view")
-        current_student = gui.findStudent(current_student_name, student_list)
+        current_student = gui.find_student(current_student_name, student_list)
         gui.updateDataWindow(current_student)
         gui.calculateErrorPoints(current_student, studentWithErrors.get(current_student_name, {}).get('error', {}), category_dict)
         gui.updateTable(categoryList, studentWithErrors, current_student.name)
-    
+        
+        
     dpg.set_global_font_scale(FONT_SCALE)
     dpg.set_viewport_width(DEFAULT_WIDTH * 2)
     dpg.show_viewport()        

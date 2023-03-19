@@ -55,28 +55,47 @@ SUBMISSION_LEVEL = {"minimi": "minimitaso", "perus": "perustaso", "tavoite": "ta
 #initialize font 
 
 
+def find_student(student_name, student_list) -> StudentInfo:
+    return next((x for x in student_list if x.name == student_name), None)
+
+def find_category(category_list, category_name):
+    return next((c for c in category_list if c.name == category_name ), None)
+
+def find_feedback(category, error_id):
+    return next((error.feedback for error in category.errors if error._id == error_id), None)
+
+def find_values(category, error_id):
+    return next((error.values for error in category.errors if error._id == error_id),0)
+
+def find_error(category, error_id):
+    return next((error for error in category.errors if error._id == error_id), None)
+
+def get_student_number(sender, app_data, userdata):
+    studentWithErrors, student_list = userdata[0], userdata[1]
+    current_student = find_student(dpg.get_value("student_view"), student_list)
+    current_student.student_number = app_data
+    studentWithErrors[current_student.name]["student_number"] = app_data 
 
 #Adding the folder files to student
 
 def add_files_in_folder(dirname, studentWithErrors, category_dict, category_list):
     student_list = []
     
-
+    
     group = str(dirname).split('/')[-1]
     files = os.listdir(dirname)
-    
+    studentWithErrors = correct_errorpoints(studentWithErrors, category_list)
     for file in files:
         temp_error_list = []
         student_name = str(file).strip().replace("_", " ")
         category_status = CATEGORY_STATUS.copy()
         if student_name in studentWithErrors:
             data_student = studentWithErrors[student_name]
-            addFeedbacksToStudent(data_student)
             # for k, v in data_student[ERROR].items():
             #     temp_error = ErrorInfo(_id = k, text = "",  values = v[ERRORVALUE], amount = v[AMOUNT], feedback= v["feedback"])
             #     temp_error_list.append(temp_error)
             student = StudentInfo(name=student_name, group = group, grade=data_student["grade"], errorpoints=data_student["errorpoints"], 
-                                  error_list=addFeedbacksToStudent(data_student), moodle_comment=category_status, student_number = data_student["student_number"])
+                                  error_list=add_feedbacks_to_student(data_student), moodle_comment=category_status, student_number = data_student["student_number"])
             # calculateErrorPoints(student, data_student.get(ERROR, {}), category_dict)
 
         else:
@@ -87,7 +106,7 @@ def add_files_in_folder(dirname, studentWithErrors, category_dict, category_list
     
     return student_list
 
-def addFeedbacksToStudent(data_student):
+def add_feedbacks_to_student(data_student):
     
     temp_feedback = {}
     for k, v in data_student[ERROR].items():
@@ -96,13 +115,27 @@ def addFeedbacksToStudent(data_student):
         temp_feedback[k] = v["feedback"]
 
     return temp_feedback
+
+def correct_errorpoints(studentWithErrors, category_list):
+    temp_dict = studentWithErrors.copy()
+    student_list = temp_dict.keys()
+    # for key, values in temp_dict.items():
+        
+    #     category = find_category(category_list, v[CATEGORY])
+    #     error = find_error(category, k)
+            # if (error._id == key):
+            #     if (error.values[str(v[AMOUNT])] != v[ERRORVALUE]):
+            #         temp_dict[key][ERROR][k][ERRORVALUE] = error.values[str(values[AMOUNT])]
+            
+    return temp_dict
+
 def select_student(sender, app_data, user_data):
 
     #previous student
     
     studentWithErrors, categoryList, student_list = user_data[0], user_data[1], user_data[2]
     student_name = str(app_data)
-    studentObject = findStudent(student_name, student_list) 
+    studentObject = find_student(student_name, student_list) 
     updateTable(categoryList, studentWithErrors, student_name)
     
     
@@ -118,6 +151,7 @@ def updateDataWindow(studentObject):
     dpg.set_value("level", studentObject.group)
     dpg.set_value("student_number", studentObject.student_number)
     dpg.set_value("student_grade", str(studentObject.grade))
+    print(studentObject.error_list)
     dpg.set_value("feedback_input", convertFeedbackToString(studentObject.error_list.values()))
     dpg.set_value("error_points", studentObject.errorpoints)
     
@@ -152,12 +186,12 @@ def mistakeSelected(sender, app_data, user_data):
     sCurrent_amount = str(current_amount)
  
     #Indexing the student data and error data
-    current_student = findStudent(student_name, student_list)
+    current_student = find_student(student_name, student_list)
 
-    current_category = findTheCategory(category_list, category_name)
-    current_values = findTheValues(current_category, sender)
-    current_feedback = findTheFeedback(current_category, sender)
-    current_error = findTheError(current_category, sender)
+    current_category = find_category(category_list, category_name)
+    current_values = find_values(current_category, sender)
+    current_feedback = find_feedback(current_category, sender)
+    current_error = find_error(current_category, sender)
     current_value = getTheErrorValue(current_values, current_amount)
 
 
@@ -178,25 +212,30 @@ def mistakeSelected(sender, app_data, user_data):
                 del current_student.error_list[sender]
             
 
-        else:
-            studentWithErrors[student_name][ERROR][sender][ERRORVALUE] = current_value
+        elif current_amount > 0 or current_amount == -1:
+
+            studentWithErrors[student_name][ERROR][sender][AMOUNT] = current_amount
+            
+            
+            studentWithErrors[student_name][ERROR][sender][ERRORVALUE] = getTheErrorValue(current_values, current_amount)
+      
         
         
             
             
-        if (len(current_student.error_list) == 0 and current_amount != 0):
-            current_student.error_list = {}
-         
+            
+                
+            
             studentWithErrors[student_name][ERROR][sender]["feedback"] = current_feedback
             current_student.error_list[sender] = current_feedback
             #rint(current_student.error_list)
-        elif (sender in current_student.error_list.keys() and current_amount != 0):
-            if (current_student.error_list[sender] != current_feedback):
-                pass
+        # elif (sender in current_student.error_list.keys() and current_amount != 0):
+        #     if (current_student.error_list[sender] != current_feedback):
+        #         pass
 
     student = studentWithErrors.get(student_name, {})
-    print(student.get(ERROR, {}))
-    #category_dict = calculateErrorPoints(current_student, student.get(ERROR, {}), category_dict)
+
+    category_dict = calculateErrorPoints(current_student, student.get(ERROR, {}), category_dict)
 
     current_student.grade = checkGrade(current_student.errorpoints, current_student.group)
     dpg.split_frame()
@@ -246,6 +285,7 @@ def calculateErrorPoints(current_student, studentFromDict, category_dict):
     if (len(studentFromDict) != 0):
         
         for key, values in studentFromDict.items():
+            print(f'KEY; {key} and values {values}')
             errorpoints += float(values[ERRORVALUE])
             
             print(key)
@@ -292,7 +332,7 @@ def checkGrade(errorpoints, group):
 def updateText(sender, app_data, user_data):
     pass
     student_list, studentWithErrors = user_data[0], user_data[1]
-    current_student = findStudent(dpg.get_value("student_view"), student_list)
+    current_student = find_student(dpg.get_value("student_view"), student_list)
     texts = dpg.get_value(sender).split("\n")
     
     #print(texts)
@@ -340,7 +380,7 @@ def updateDictBeforeWriting(studentWithErrors, student_list):
         if student.name in studentWithErrors:
             
             studentWithErrors[student.name]["grade"] = student.grade
-            studentWithErrors[student.name]["feedback"] = student.error_list
+            studentWithErrors[student.name]["feedback"] = list(student.error_list.values())
             
         else:
             studentWithErrors[student.name]["grade"] = MAX_GRADE.get(student.group)
@@ -388,9 +428,7 @@ def checkEmptyKeys(studentWithErrors):
 
 ######## READING GRADED STUDENT FROM JSON ########
 def readGradedFile(group):
-
     studentWithErrors = {}
-
     try:
         with open(FILENAME[group], "r", encoding="utf-8") as file:
             try:
@@ -402,13 +440,7 @@ def readGradedFile(group):
     except FileNotFoundError as e:
         print("File not found ", e)
         studentWithErrors = nested_defaultdict()
-    
-    
-        
     return studentWithErrors
-
-
-
 
 def nested_defaultdict(existing=None, **kwargs):
     if existing == None:
@@ -456,9 +488,9 @@ def read_problem_json(filename):
                 text = problem["text"]
                 values = problem["error_values"]
                 amount = 0
-                feedback = problem["feedback"]
-            
+                feedback = problem["feedback"]          
                 next_category = problem["category"]
+
                 if (next_category == current_category):
                     errorInfo = ErrorInfo(_id, text, values, amount, feedback)
                     errorList.append(errorInfo)
@@ -486,26 +518,6 @@ def read_problem_json(filename):
     return categoryList, category_dict
 
 
-def findStudent(student_name, student_list) -> StudentInfo:
-    return next((x for x in student_list if x.name == student_name), None)
 
-def findTheCategory(category_list, category_name):
-    return next((c for c in category_list if c.name == category_name ), None)
-
-def findTheFeedback(category, error_id):
-    return next((error.feedback for error in category.errors if error._id == error_id), None)
-
-def findTheValues(category, error_id):
-    return next((error.values for error in category.errors if error._id == error_id),0)
-
-def findTheError(category, error_id):
-    return next((error for error in category.errors if error._id == error_id), None)
-
-def get_student_number(sender, app_data, userdata):
-    studentWithErrors, student_list = userdata[0], userdata[1]
-    current_student = findStudent(dpg.get_value("student_view"), student_list)
-    current_student.student_number = app_data
-    studentWithErrors[current_student.name]["student_number"] = app_data 
     
-def tree():
-    return defaultdict(tree)
+
