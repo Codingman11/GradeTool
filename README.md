@@ -15,10 +15,10 @@
         Tai  
             Avaa GradingTool.py ja suorita CTRL + F5 tai play nappulaa
 
-    # Jos ikkuna näyttää liian isolta niin voit säätää DEFAULT_WIDTH ja FONT_SCALE GradingTool.py:n alussa
+    # Jos ikkuna näyttää liian pieneltä tai isolta niin voit säätää DEFAULT_WIDTH ja DEFAULT_FONT GradingTool.py:n alussa
        Defaulttina on
-        DEFAULT_WIDTH = 900
-        FONT_SCALE = 1.2
+        DEFAULT_WIDTH = 1080
+        DEFAULT_WIDTH = 23
 
     # KUSTOMOINTI
         - Voit säätää ikkunoiden leveyttä vetämällä ikkunan reunaa 
@@ -32,8 +32,9 @@
     # Arviointitaulukko (Opiskelija ikkunan alapuolella)
         Merkkaa opiskelijanumero input kohtaan
 
-    # Feedback ikkuna (Arviointitaulukko ikkunan alla)
-        EI OLE KÄYTÖSSÄ
+    # Palautteet ikkuna (Arviointitaulukko ikkunan alla)
+        ON KÄYTÖSSÄ > v 0.2.1
+        Voit muokata kommenttia tällä hetkellä yhdellä rivillä.
 
     # "Kirjoita tiedostoihin" nappi(Opiskelija ikkunan listan yläpuolella)
         Ennen kuin lopetat ohjelman MUISTA kirjoittaa tiedostoihin,

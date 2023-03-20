@@ -1,4 +1,4 @@
-__version__ = "0.2.0"
+__version__ = "0.2.5"
 __author__ = "JP"
 
 import dearpygui.dearpygui as dpg
@@ -15,18 +15,15 @@ import GradingToolGUI as gui
 #   V0.1.4 Feedback window added and student's feedback based on mistakes are added. 
 #   V0.2.0 The gradetool is working expect a few bugs
 #   V0.2.1 Each category's first problem didnt show up in the program --> FIXED
+#   V0.2.5 Fixing the error_value indexing and feedback is added. The feedback can be modified.
 MAX_GRADE = {"minimi": 1, "perus": 3, "tavoite": 5}
 
-#You can edit this based on your screen size
-DEFAULT_WIDTH = 900
-FONT_SCALE = 1
+#You can edit this based on your screen size and adjust the font size
+DEFAULT_WIDTH = 1200
+DEFAULT_SIZE = 23
 #DEFAULT_FONT, NORMAL_FONT, TITLE_FONT = gui.initialize_font()
 DEFAULT_FONT = Path(__file__).parents[1] / "assets/Dosis-Medium.ttf"
 HL_FONT = Path(__file__).parents[1] / "assets/arialnb.ttf"
-
-
-
-   
 
 
 def main() -> None:
@@ -38,15 +35,15 @@ def main() -> None:
     dirname = filedialog.askdirectory()
    
     group = str(dirname).split("/")[-1]
-    ######## INITIALIZING DATA AND DPG ########
+    ######## INITIALIZING DATA  ########
     categoryList, category_dict = gui.read_problem_json("Problem_list_C.json")
-    # gui.read_json_file()
-    #print(category)
     studentWithErrors = gui.readGradedFile(group)
     
     student_list = gui.add_files_in_folder(dirname, studentWithErrors, category_dict, categoryList)
     students = tuple(student.name for student in student_list)
     
+    
+    ######## INITIALIZING DPG LAYOUT  ########
     dpg.create_context()
     dpg.configure_app(
         docking=True, docking_space=True, init_file="custom_layout.ini"
@@ -58,8 +55,9 @@ def main() -> None:
     button_window = dpg.generate_uuid()
     data_window = dpg.generate_uuid()
 
+    #IMPORTING THE FONT FAMILY
     with dpg.font_registry():
-        default_font = dpg.add_font(DEFAULT_FONT, 25)
+        default_font = dpg.add_font(DEFAULT_FONT, DEFAULT_SIZE)
         hl_font = dpg.add_font(HL_FONT, 17)
         title_font = dpg.add_font(HL_FONT, 22)
     
@@ -94,14 +92,11 @@ def main() -> None:
                                     dpg.add_input_int(min_value=-1, min_clamped=True, default_value=0, width=-1,tag=error._id, callback=gui.mistakeSelected,  user_data=[studentWithErrors, student_list, categoryList, category_dict])
                       
     ######## COMMENT VIEW ########
-    with dpg.window(label="Feedback", tag=button_window) as bWindow:
+    with dpg.window(label="Palautteet", tag=button_window) as bWindow:
         dpg.add_input_text(multiline=True, height=-1, label="", width=-1 ,tag="feedback_input", callback=gui.updateText, user_data=[student_list, studentWithErrors])
         
     ######## STUDENT DATA VIEW ########
     with dpg.window(label="Arviointitaulukko", tag=data_window) as dWindow:
-        # with dpg.group(horizontal=True):
-        #     dpg.add_text("Opiskelijanumero: ")
-        #     dpg.add_input_text(tag="student_number", width=200)
         with dpg.group(horizontal=True, horizontal_spacing=10):
             dpg.add_text("Taso: ", indent=0.1)
             dpg.add_text(student_list[0].group, tag="level")
@@ -113,8 +108,6 @@ def main() -> None:
             dpg.add_text("Opiskelijanumero: ")
             dpg.add_input_text(tag="student_number", width=-1, callback=gui.get_student_number, user_data=[studentWithErrors, student_list])
         
-        
-           
     ######## MENUBAR ########
     with dpg.viewport_menu_bar():
         with dpg.menu(label="File"):
@@ -123,10 +116,7 @@ def main() -> None:
                 callback=lambda: dpg.save_init_file("custom_layout.ini"),
             ),
             dpg.add_menu_item(label="Save graded to file", callback=gui.writeToJsonFile, user_data=studentWithErrors)
-            #dpg.add_menu_item(label="Choose folder", callback=gui.askFileTest, user_data=student_list)
-
-
-    
+            
 
     ######## ITEM REGISTRIES ########
     with dpg.item_handler_registry(tag="student handler") as handler:
@@ -135,19 +125,12 @@ def main() -> None:
     with dpg.item_handler_registry(tag="mistake handler") as mHandler:
         dpg.add_item_clicked_handler(callback=gui.mistakeSelected, user_data=[studentWithErrors, student_list, categoryList, category_dict])        
         
-
     dpg.bind_item_handler_registry("student_view", "student handler")
     dpg.bind_item_handler_registry("error_view", "error handler")
     
-    # dpg.bind_item_handler_registry("category_tree", "tree handler")
-
     dpg.bind_font(default_font)
 
-    
-    
     ######## STARTING GUI ########
-    #dpg.show_item_registry()
-    #dpg.show_style_editor()
     dpg.setup_dearpygui()
     dpg.set_viewport_pos([0,0])
     
@@ -158,9 +141,7 @@ def main() -> None:
         gui.calculateErrorPoints(current_student, studentWithErrors.get(current_student_name, {}).get('error', {}), category_dict)
         gui.updateTable(categoryList, studentWithErrors, current_student.name)
         
-        
-    dpg.set_global_font_scale(FONT_SCALE)
-    dpg.set_viewport_width(DEFAULT_WIDTH * 2)
+    dpg.set_viewport_width(DEFAULT_WIDTH)
     dpg.show_viewport()        
     dpg.start_dearpygui()    
     # while dpg.is_dearpygui_running():
@@ -170,7 +151,6 @@ def main() -> None:
     dpg.destroy_context()
 
 if __name__ == "__main__":
-    
     main()
 
 
