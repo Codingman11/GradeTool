@@ -405,7 +405,7 @@
 			"ID": "TK0705",
 			"text": "Perus/Tavoite, Valinta 3 tehty vain 1 aliohjelmalla tai jako väärin",
 			"extra_comment": "Jako väärin tarkoittaa sitä että toinen on turha tai jaosta ei ole hyötyä (tarvittaessa kysy)",
-			"feedback": "Tiedoston kirjoittamista ei ole tehty tehtävänannon mukaisesti kahdella .",
+			"feedback": "Tiedoston kirjoittamista ei ole tehty tehtävänannon mukaisesti kahdella aliohjelmalla.",
 			"category":"Tiedostonkäsittely",
 			"error_values": {
 				"1": 1,

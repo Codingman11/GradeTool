@@ -1,4 +1,4 @@
-__version__ = "0.2.5"
+__version__ = "0.3.0"
 __author__ = "JP"
 
 import dearpygui.dearpygui as dpg
@@ -275,45 +275,12 @@ def hasStudentError(current_student, sender):
 #Caluclate the student errorpoints when mistakeSelected is called
 def calculateErrorPoints(current_student, studentFromDict, category_dict):
     
-    
-
-    #temp_category_status = []
-    #category_dict = dict((k,0) for k in category_dict)
-
+    errorpoints = 0.0
 
     if (len(studentFromDict) != 0):
         
         category_dict, errorpoints = calculateCategoryPoints(studentFromDict, category_dict)
         updateCategoryStatus(current_student, category_dict)
-        # for key, values in studentFromDict.items():
-        #     #print(f'KEY; {key} and values {values}')
-        #     errorpoints += float(values[ERRORVALUE])
-            
-            
-        #     for k, v in values.items():
-                
-        #         if (k == CATEGORY):
-        #             category = v
-        #         if (k == ERRORVALUE):
-        #             error_value = v
-          
-        #     ready = tuple([category, error_value])
-        #     temp_category_status.append(ready)
-            
-        # if len(temp_category_status) != 0:
-        #     for index, category in enumerate(temp_category_status):
-        #         category_dict[category[0]] += round(category[1], 1)
-        
-        
-        # for index, (key, values) in enumerate(category_dict.items()):
-        #     if values < 1:
-        #         current_student.moodle_comment[index] = "OK"
-        #     elif 1 <= values < 2:
-        #         current_student.moodle_comment[index] = "Kesken"
-        #     elif values >= 2:
-        #         current_student.moodle_comment[index] = "EiOk"
-
-   
          
     current_student.errorpoints = round(errorpoints, 1)
     return category_dict

@@ -1,4 +1,4 @@
-__version__ = "0.2.5"
+__version__ = "0.3.0"
 __author__ = "JP"
 
 import dearpygui.dearpygui as dpg
@@ -15,7 +15,7 @@ import GradingToolGUI as gui
 #   V0.1.4 Feedback window added and student's feedback based on mistakes are added. 
 #   V0.2.0 The gradetool is working expect a few bugs
 #   V0.2.1 Each category's first problem didnt show up in the program --> FIXED
-#   V0.2.5 Fixing the error_value indexing and feedback is added. The feedback can be modified.
+#   V0.3.0 Fixing the error_value indexing and feedback is added. The feedback can be modified.
 MAX_GRADE = {"minimi": 1, "perus": 3, "tavoite": 5}
 
 #You can edit this based on your screen size and adjust the font size
