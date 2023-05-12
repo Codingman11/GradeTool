@@ -1,6 +1,40 @@
 {
-    "language": "FIN",
-    "default_path": [],
-    "title_font_size": 12,
-    "normal_font_size": 10,
+    "lang": {
+
+        "FIN":{
+            "language": ["Suomi", "Englanti"],
+            "save": "KIRJOITA TIEDOSTOIHIN",
+            "grade": "Arvosana",
+            "level": "Taso",
+            "errorpoints": "Virhepisteet",
+            "errors": "Virheet",
+            "category": "Kategoriat",
+            "student_number": "Opiskelijanumero",
+            "students": "Opiskelijat",
+            "amount": "Lkm",
+            "file": "Tiedosto",
+            "evaluation": "Arviointitaulukko",
+            "feedbacks": "Palautteet",
+            "change_language": "Vaihda kieli"
+        },
+        "ENG": {
+            "language": ["Finnish", "English"],
+            "save": "WRITE TO FILES",
+            "grade": "Grade",
+            "level": "Level",
+            "errorpoints": "Errorpoints",
+            "errors": "Programming errors",
+            "category": "Categories",
+            "student_number": "Student number",
+            "students": "Students",
+            "amount": "Amt",
+            "file": "File",
+            "evaluation": "Evaluation grid",
+            "feedbacks": "Feedbacks",
+            "change_language": "Change language"
+        }
+    }
+    
+
+    
 }

@@ -1,4 +1,4 @@
-__version__ = "0.3.0"
+__version__ = "0.3.2"
 __author__ = "JP"
 
 import dearpygui.dearpygui as dpg
@@ -9,15 +9,31 @@ from collections import defaultdict
 
 
 #Initializing the fonts, filenames, max_grades
+# LEVELS
+MINIMUM = "minimi"
+BASIC = "perus"
+ADVANCED = "tavoite"
 
-FILENAME = {"minimi": "master_minimi.json", "perus": "master_perus.json", "tavoite": "master_tavoite.json"}
+FILENAME = {
+    MINIMUM: f"master_{MINIMUM}.json",
+    BASIC: f"master_{BASIC}.json",
+    ADVANCED: f"master_{ADVANCED}.json"
+}
+
+FILENAME_COMMENTS = {
+    MINIMUM: f"{MINIMUM}_comments.txt",
+    BASIC: f"{BASIC}_comments.txt",
+    ADVANCED: f"{ADVANCED}_comments.txt"
+}
+
 ARVOSTELLUT = "Arvostellut.json"
-MAX_GRADE = {"minimi": 1, "perus": 3, "tavoite": 5}
+MAX_GRADE = {MINIMUM: 1, BASIC: 3, ADVANCED: 5}
 AMOUNT, ERRORVALUE, ERROR, CATEGORY = 'amount', 'value', 'error', 'category'
 START_STUDENT_TEXT = "--opiskelija--"
 
 
-#TODO 
+
+#TODO
 
 # Write data to master.json
 # Copy the text to clipboard
@@ -30,27 +46,35 @@ START_STUDENT_TEXT = "--opiskelija--"
 
 
 CATEGORY_TEXTS = [
-                "Toiminnallisuus tehtäväksiannon mukaan ja CodeGradesta läpi",
-                "Tiedostorakenne useita tiedostoja (ei arvioida minimitasolla)",
-                "Tyyliohjeen mukaiset alkukommentit",
-                "Ohjelmarakenne pääohjelma ja aliohjelmat",
-                "Perusoperaatiot tulostus, syöte, valintarakenne, toistorakenne",
-                "Tiedonvälitys parametrit ja paluuarvot, ei globaaleja muuttujia",
-                "Tiedostonkäsittely luku ja kirjoittaminen",
-                "Tietorakenteet tietue/struct, linkitetty lista",
-                "Dynaaminen muistinhallinta: malloc, free, NULL",
-                "Virheenkäsittely muistin- ja tiedostonkäsittelyssä",
-                "Analyysien toteutus",
-                "Makefile palautettu ja make tuottaa toimivan ohjelman (ei arvioida minimitasolla)",
-            ]
+    "Toiminnallisuus tehtäväksiannon mukaan ja CodeGradesta läpi",
+    "Tiedostorakenne useita tiedostoja (ei arvioida minimitasolla)",
+    "Tyyliohjeen mukaiset alkukommentit",
+    "Ohjelmarakenne pääohjelma ja aliohjelmat",
+    "Perusoperaatiot tulostus, syöte, valintarakenne, toistorakenne",
+    "Tiedonvälitys parametrit ja paluuarvot, ei globaaleja muuttujia",
+    "Tiedostonkäsittely luku ja kirjoittaminen",
+    "Tietorakenteet tietue/struct, linkitetty lista",
+    "Dynaaminen muistinhallinta: malloc, free, NULL",
+    "Virheenkäsittely muistin- ja tiedostonkäsittelyssä",
+    "Analyysien toteutus",
+    "Makefile palautettu ja make tuottaa toimivan ohjelman (ei arvioida minimitasolla)",
+]
 
 CATEGORY_STATUS = ["Ok"]*len(CATEGORY_TEXTS)
 
 
-FAIL_LIMIT = {"minimi": 1, "perus": 2, "tavoite": 2}
+FAIL_LIMIT = {MINIMUM: 1, BASIC: 2, ADVANCED: 2}
 PASS_TEXT = {"PASS": "Hyväksytty", "FAIL": "Korjattava"}
-SUBMISSION = "1"
-SUBMISSION_LEVEL = {"minimi": "minimitaso", "perus": "perustaso", "tavoite": "tavoitetaso"}
+SUBMISSION = "2"
+SUBMISSION_LEVEL = {
+    MINIMUM: "minimitaso",
+    BASIC: "perustaso",
+    ADVANCED: "tavoitetaso"
+}
+if SUBMISSION == "2":
+    MAX_GRADE[MINIMUM] = 1
+    MAX_GRADE[BASIC] = 2
+    MAX_GRADE[ADVANCED] = 4
 
 
 
@@ -74,7 +98,7 @@ def get_student_number(sender, app_data, userdata):
     studentWithErrors, student_list = userdata[0], userdata[1]
     current_student = find_student(dpg.get_value("student_view"), student_list)
     current_student.student_number = app_data
-    studentWithErrors[current_student.name]["student_number"] = app_data 
+    studentWithErrors[current_student.name]["student_number"] = app_data
 
 ######## Adding the folder files to student  ########
 
@@ -82,38 +106,57 @@ def add_files_in_folder(dirname, studentWithErrors, category_dict, category_list
     student_list = []
     group = str(dirname).split('/')[-1]
     files = os.listdir(dirname)
-    
-    
-    
+
+
+
     studentWithErrors = correct_errorpoints(studentWithErrors, category_list, group) #Correcting the errorpoints and values
     for file in files:
         student_name = str(file).strip().replace("_", " ")
         category_status = CATEGORY_STATUS.copy()
+        errorpoints = 0.0
         if student_name in studentWithErrors:
             data_student = studentWithErrors[student_name]
             category_dict, errorpoints = calculateCategoryPoints(data_student.get(ERROR,{}), category_dict)
-            
-            student = StudentInfo(name=student_name, group = group, grade=data_student["grade"], errorpoints=data_student["errorpoints"], 
-                                  error_list=add_feedbacks_to_student(data_student), moodle_comment=category_status, student_number = data_student["student_number"])
-            
+
+            student = StudentInfo(name=student_name, group = group, grade=data_student["grade"], errorpoints=data_student["errorpoints"],
+                                  error_list=add_feedbacks_to_student(data_student, category_list), moodle_comment=category_status, student_number = data_student["student_number"])
+
         else:
             student = StudentInfo(name=student_name, group = group, grade=MAX_GRADE[group], moodle_comment=category_status, student_number="", error_list={})
-        updateCategoryStatus(student, category_dict)
-        student_list.append(student)    
-    
+        updateCategoryStatus(student, category_dict, errorpoints)
+        print(student.moodle_comment)
+        student_list.append(student)
+
     return student_list
 
-#Adding the feedback to student error_list. Also indexing each error feedback and check whether it is same as in feedback list. 
-    # IF NOT SAME FEEDBACK -> The feedback text from feedback list. 
-    # OTHERWISE -> default feedback from its error key. 
-        
-def add_feedbacks_to_student(data_student):
-    
+#Adding the feedback to student error_list. Also indexing each error feedback and check whether it is same as in feedback list.
+    # IF NOT SAME FEEDBACK -> The feedback text from feedback list.
+    # OTHERWISE -> default feedback from its error key.
+
+def add_feedbacks_to_student(data_student, category_list):
+
     temp_feedback = {}
     temp_feedback_list = data_student["feedback"]
     for index, (k, v) in enumerate(data_student[ERROR].items()):
         if not k:
             continue
+
+        category = find_category(category_list, v["category"])
+        error = find_error(category, k)
+
+        # If feedback in Problem_list has been changed, then generated
+        # feedback is updated.
+        if v["feedback"] != error.feedback:
+
+            # If feedback hs not been modified by assistant, then updage
+            # also generated feedback
+            if temp_feedback_list[index] == v["feedback"]:
+                temp_feedback_list[index] = error.feedback
+
+            v["feedback"] = error.feedback
+            data_student[ERROR][k]["feedback"] = error.feedback
+
+
         if temp_feedback_list[index] != v["feedback"]:
             temp_feedback[k] = temp_feedback_list[index]
         else:
@@ -132,12 +175,12 @@ def correct_errorpoints(studentWithErrors, category_list, group):
             error_values = find_values(category, error_id)
             iAmount = error_items[AMOUNT]
             error_value = getTheErrorValue(error_values, iAmount)
-            
+
             if (error_value != error_items[ERRORVALUE]):
                 temp_dict[student_name][ERROR][error_id][ERRORVALUE] = error_value
-                
+
             total_points += error_value
-            
+
         temp_dict[student_name]["errorpoints"] = total_points
         temp_dict[student_name]["grade"] = checkGrade(total_points, group)
 
@@ -148,14 +191,14 @@ def select_student(sender, app_data, user_data):
 
     studentWithErrors, categoryList, student_list = user_data[0], user_data[1], user_data[2]
     student_name = str(app_data)
-    studentObject = find_student(student_name, student_list) 
+    studentObject = find_student(student_name, student_list)
     updateTable(categoryList, studentWithErrors, student_name)
-    
+
     if (studentObject != None):
         updateDataWindow(studentObject)
         dpg.set_value("student_number", studentObject.student_number)
-    
-    return 
+
+    return
 ######## Updating the data window ########
 def updateDataWindow(studentObject):
     dpg.set_value("level", studentObject.group)
@@ -163,7 +206,7 @@ def updateDataWindow(studentObject):
     dpg.set_value("student_grade", str(studentObject.grade))
     dpg.set_value("feedback_input", convertFeedbackToString(studentObject.error_list.values()))
     dpg.set_value("error_points", studentObject.errorpoints)
-    
+
     return
 ######## Updating the mistakes window ########
 def updateTable(categoryList, studentWithErrors, student):
@@ -173,26 +216,26 @@ def updateTable(categoryList, studentWithErrors, student):
                 dpg.set_value(error._id, studentWithErrors[student][ERROR][error._id][AMOUNT])
             else:
                 dpg.set_value(error._id, 0)
-    
+
     return
 
 
 ######## Mistake/Error is selected ########
 def mistakeSelected(sender, app_data, user_data):
     student_name = dpg.get_value("student_view")
-    
+
     #StudentWithErrors is dictionary for updating the students who have errors
     #Getting user_data
     studentWithErrors = user_data[0]
     student_list = user_data[1]
     category_list = user_data[2]
     category_dict = user_data[3]
-    
+
     #Getting from GUI Data
     category_name = dpg.get_item_parent(dpg.get_item_parent(sender))
     current_amount =  dpg.get_value(sender)
 
- 
+
     #Indexing the student, error_values, category data
     current_student = find_student(student_name, student_list)
 
@@ -202,53 +245,53 @@ def mistakeSelected(sender, app_data, user_data):
     current_value = getTheErrorValue(current_values, current_amount)
 
 
-    
+
     if (student_name != None):
         #print(current_amount)
         studentWithErrors[student_name][ERROR][sender][AMOUNT] = current_amount
         studentWithErrors[student_name][ERROR][sender][CATEGORY] = current_category.name
-        
-        
+
+
         if current_amount == 0:
             #Checking the current_amount and checking if it exists
             if keys_exists(studentWithErrors, sender):
                 deleteError(studentWithErrors.get(student_name, {}), sender)
-                      
-        
+
+
             if sender in current_student.error_list.keys():
                 del current_student.error_list[sender]
-            
+
 
         elif current_amount > 0 or current_amount == -1:
 
             studentWithErrors[student_name][ERROR][sender][AMOUNT] = current_amount
-            
-            
+
+
             studentWithErrors[student_name][ERROR][sender][ERRORVALUE] = current_value
             studentWithErrors[student_name][ERROR][sender]["feedback"] = current_feedback
-            
-            
+
+
             if sender in current_student.error_list.keys():
                 if (current_student.error_list[sender] != current_feedback):
                     pass
             else:
-                current_student.error_list[sender] = current_feedback  
-            
+                current_student.error_list[sender] = current_feedback
+
 
     student = studentWithErrors.get(student_name, {})
     category_dict = calculateErrorPoints(current_student, student.get(ERROR, {}), category_dict)
     current_student.grade = checkGrade(current_student.errorpoints, current_student.group)
-    
+
     dpg.split_frame()
     updateDataWindow(current_student)
-    
+
     return
-    
+
 #Getting the value from the mistake amount
 def getTheErrorValue(current_values, current_amount) -> float:
     sCurrent_amount = str(current_amount)
     if (sCurrent_amount in current_values.keys()):
-        
+
         temp_value = current_values[sCurrent_amount]
     elif current_amount == -1:
         temp_value = current_values["All"]
@@ -260,50 +303,54 @@ def getTheErrorValue(current_values, current_amount) -> float:
                 break
         else:
             temp_value = 0
-    
+
     return temp_value
 
-#Student feedback list contains error ID, 
+#Student feedback list contains error ID,
 
 def hasStudentError(current_student, sender):
     for error in current_student.error_list:
         if error._id == sender:
             return error
-        
+
     return None
-    
-#Caluclate the student errorpoints when mistakeSelected is called
+
+#Calculate the student errorpoints when mistakeSelected is called
 def calculateErrorPoints(current_student, studentFromDict, category_dict):
-    
     errorpoints = 0.0
 
+    
+    #temp_category_status = []
+    #category_dict = dict((k,0) for k in category_dict)
+
+
     if (len(studentFromDict) != 0):
-        
+
         category_dict, errorpoints = calculateCategoryPoints(studentFromDict, category_dict)
-        updateCategoryStatus(current_student, category_dict)
-         
+        updateCategoryStatus(current_student, category_dict, errorpoints)
+     
     current_student.errorpoints = round(errorpoints, 1)
     return category_dict
 
 ######## Calculating the category points after correcting errorpoints from json ########
 
 def calculateCategoryPoints(studentFromDict, category_dict):
-    
+
     temp_category_status = []
     errorpoints = 0.0
     category_dict = dict((k,0) for k in category_dict)
     for key, values in studentFromDict.items():
         errorpoints += float(values[ERRORVALUE])
         for k, v in values.items():
-            
+
             if (k == CATEGORY):
                 category = v
             if (k == ERRORVALUE):
                 error_value = v
-        
+
         temp_category_with_errorvalue = tuple([category, error_value])
         temp_category_status.append(temp_category_with_errorvalue)
-        
+
     if len(temp_category_status) != 0:
         for index, category in enumerate(temp_category_status):
             category_dict[category[0]] += round(category[1], 1)
@@ -311,17 +358,31 @@ def calculateCategoryPoints(studentFromDict, category_dict):
     return category_dict, errorpoints
 
 ######## Updating each category status to the student ########
-def updateCategoryStatus(student, category_dict):
-    
-    for index, (key, values) in enumerate(category_dict.items()):
-        if values < 1:
-            student.moodle_comment[index] = "OK"
-        elif 1 <= values < 2:
-            student.moodle_comment[index] = "Kesken"
-        elif values >= 2:
-            student.moodle_comment[index] = "EiOk"
-    
-    return 
+def updateCategoryStatus(student, category_dict, errorpoints):
+
+    ### Checking if errorpoints greater than fail limit ###
+    if (errorpoints >= FAIL_LIMIT[student.group]):
+        
+        for index, (key, values) in enumerate(category_dict.items()):
+            if (values > 0):
+                student.moodle_comment[index] = "EiOk"
+                
+    ### Checking if there is some errorpoints but less than fail limit ###
+    elif (errorpoints < FAIL_LIMIT[student.group] and errorpoints >= 1):
+        for index, (key, values) in enumerate(category_dict.items()):
+            if (values > 0):
+                student.moodle_comment[index] = "Kesken"
+    ### Otherwise passed ###
+    else:
+        for index, (key, values) in enumerate(category_dict.items()):
+            if values < 1:
+                student.moodle_comment[index] = "OK"
+            elif 1 <= values < 2:
+                student.moodle_comment[index] = "Kesken"
+            elif values >= 2:
+                student.moodle_comment[index] = "EiOk"
+        
+    return
 
 #Checking the student grade based on errorpoints
 def checkGrade(errorpoints, group):
@@ -330,7 +391,7 @@ def checkGrade(errorpoints, group):
     elif errorpoints >= 1 and errorpoints < 2:
         grade = 0 if (group == list(MAX_GRADE.keys())[0]) else MAX_GRADE.get(group) - 1
     else:
-        grade = 0 
+        grade = 0
     return grade
 
 
@@ -340,21 +401,21 @@ def updateText(sender, app_data, user_data):
     student_list, studentWithErrors = user_data[0], user_data[1]
     current_student = find_student(dpg.get_value("student_view"), student_list)
     texts = dpg.get_value(sender).split("\n")
-    
+
     #print(texts)
-    for index, (k, v) in enumerate(current_student.error_list.items()): 
+    for index, (k, v) in enumerate(current_student.error_list.items()):
         if (studentWithErrors[current_student.name][ERROR][k] != texts[index]):
-            
+
             # print(index, k, v)
             current_student.error_list[k] = texts[index]
         # for text in texts:
         #     if text == v:
         #         continue
         #     elif text != v:
-        #         
-                
+        #
+
     #print(current_student.error_list)
-        
+
     if (convertFeedbackToString(texts) != dpg.get_value(sender)):
         texts.clear()
         texts.append(dpg.get_value(sender).split("\n"))
@@ -382,23 +443,23 @@ def keys_exists(element, *keys):
     return True
 
 
-    
+
 def updateDictBeforeWriting(studentWithErrors, student_list):
-    
+
     for student in student_list:
         if student.name in studentWithErrors:
-            
+
             studentWithErrors[student.name]["grade"] = student.grade
             studentWithErrors[student.name]["feedback"] = list(student.error_list.values())
             print(studentWithErrors[student.name]["feedback"])
         else:
             studentWithErrors[student.name]["grade"] = MAX_GRADE.get(student.group)
             studentWithErrors[student.name]["feedback"] = list(student.error_list)
-            
-        
+
+
         studentWithErrors[student.name]["student_number"] = student.student_number
         studentWithErrors[student.name]["errorpoints"] = student.errorpoints
-        
+
     return
 def deleteError(studentWithErrors, remove_key):
     if (isinstance(studentWithErrors, dict)):
@@ -406,19 +467,19 @@ def deleteError(studentWithErrors, remove_key):
             if (key == remove_key):
                 print(key)
                 del studentWithErrors[key]
-                
+
             else:
                 deleteError(studentWithErrors[key], remove_key)
-    
-    
-    
+
+
+
 
 #Writing graded student to master.json
 def writeToJsonFile(sender, app_data, user_data):
-    studentWithErrors, student_list, group = user_data[0], user_data[1], user_data[2]    
+    studentWithErrors, student_list, group = user_data[0], user_data[1], user_data[2]
     checkEmptyKeys(studentWithErrors)
     updateDictBeforeWriting(studentWithErrors, student_list)
-    writeCommentFile("comments.txt", student_list)
+    writeCommentFile(student_list, group)
     try:
         with open(FILENAME[group], "w", encoding="utf-8") as outfile:
             json.dump(studentWithErrors, outfile, indent=4, ensure_ascii=False)
@@ -428,12 +489,12 @@ def writeToJsonFile(sender, app_data, user_data):
 #Reading master.json and returning dict
 
 def checkEmptyKeys(studentWithErrors):
-    
+
     for key in studentWithErrors.copy():
         if len(studentWithErrors[key]) == 0:
             studentWithErrors.pop(key)
 
-    
+
 
 ######## READING GRADED STUDENT FROM JSON ########
 def readGradedFile(group):
@@ -464,9 +525,9 @@ def stripFilename(dirname, file):
     print(file)
 
 ##write generated feedback to .txt file and ready for validating before importing to Moodle
-def writeCommentFile(filename, student_list):  
+def writeCommentFile(student_list, group):
     try:
-        with open(filename, "w", encoding="UTF-8") as fhandle:
+        with open(FILENAME_COMMENTS[group], "w", encoding="UTF-8") as fhandle:
             for student in student_list:
                 fhandle.write(f'{START_STUDENT_TEXT}, {student.name}, {student.student_number}, {student.grade}:\n')
                 if (student.errorpoints >= FAIL_LIMIT[student.group]):
@@ -476,13 +537,16 @@ def writeCommentFile(filename, student_list):
                 texts = list(map(': '.join, zip(CATEGORY_TEXTS, student.moodle_comment)))
                 fhandle.writelines('\n'.join(texts))
                 fhandle.write("\n\n")
-                if (len(student.error_list) != 0):
+                fhandle.write('Kommentit: \n')
+                if (len(student.error_list) == 0):
+                    fhandle.write("Hyvää työtä! \n\n")
+                else:
                     feedback_list = list(student.error_list.values())
                     fhandle.writelines('\n'.join(feedback_list))
                     fhandle.write("\n\n")
-                
+
     except OSError as err:
-        print(f"Error to open file '{filename}':\n{err}")
+        print(f"Error to open file '{FILENAME_COMMENTS[group]}':\n{err}")
 
 
 #COMPLETE FUNCTIONS ATM
@@ -498,29 +562,29 @@ def read_problem_json(filename):
                 text = problem["text"]
                 values = problem["error_values"]
                 amount = 0
-                feedback = problem["feedback"]          
+                feedback = problem["feedback"]
                 next_category = problem["category"]
 
                 if (next_category == current_category):
                     errorInfo = ErrorInfo(_id, text, values, amount, feedback)
                     errorList.append(errorInfo)
                 else:
-                   
+
                     category = Category(name= current_category, errors=errorList)
                     category_dict[current_category] = 0
-                   
+
                     current_category = next_category
                     categoryList.append(category)
                     errorList = []
                     errorInfo = ErrorInfo(_id, text, values, amount, feedback)
                     errorList.append(errorInfo)
-                    
-                    
+
+
             ##### The last item #####
             category = Category(name = current_category, errors=errorList)
             current_category = next_category
             categoryList.append(category)
-            errorList = []            
+            errorList = []
 
     except FileNotFoundError as e:
         print("File not found", e)
@@ -529,5 +593,5 @@ def read_problem_json(filename):
 
 
 
-    
+
 
